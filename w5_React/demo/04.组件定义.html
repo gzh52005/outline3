@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04.组件定义</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+    <h1>04.组件定义</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+    /**
+        * 组件
+            * 函数组件（无状态组件，UI组件）
+                * 必须有返回值（显示在页面的内容）
+            * 类组件（状态组件，容器组件）
+                * 必须继承自React.Component
+                * 必须包含一个render方法，render方法必须包含返回值
+     */
+
+        function Home(){
+            return (
+                <div>
+                    <div>
+                        <nav>导航plus</nav>
+                        <div>Content</div>
+                        <footer>底部</footer>
+                    </div>
+                    <div></div>
+                </div>
+            )
+        }
+
+        class Datalist extends React.Component{
+            render(){
+                return (
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>name</th>
+                                <td>xxx</td>    
+                            </tr>
+                        </tbody>
+                    </table>
+                )
+            }
+        }
+
+        
+
+        ReactDOM.render(
+            // VNode/组件
+            <div>
+                <Home/>
+                <Datalist/>
+            </div>
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>

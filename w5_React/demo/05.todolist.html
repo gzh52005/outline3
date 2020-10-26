@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05.待办事项</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+
+<body>
+    <h1>待办事项</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+
+        // TodoList
+        class TodoList extends React.Component {
+            constructor() {
+                // 类如果继承自某一对象，并且存在constructor,则必须在constructor中手动执行super
+                // 执行super后，才能在constructor中使用this
+                super();
+
+                // 通过state属性给组件添加状态（数据）
+                this.state = {
+                    // 当数据有修改时，需要刷新组件内容（这个要求函数组件无法完成，所以TodoList需要改成类组件）
+                    datalist: [
+                        {
+                            id: 1,
+                            text: '实现小目标，月入过万',
+                            done: false,
+                            date: new Date()
+                        },
+                        {
+                            id: 2,
+                            text: '迎娶白富美，走上人生巅峰',
+                            done: false,
+                            date: new Date(),
+                        },
+                        {
+                            id: 3,
+                            text: '出任CEO，达到疯癫状态',
+                            done: false,
+                            date: new Date(),
+                        }
+                    ]
+                }
+
+                // 在constructor中绑定this指向（推荐）
+                this.addItem = this.addItem.bind(this);
+            }
+
+            // 添加
+            addItem(text) {
+                const newItem = {
+                    id: parseInt(Math.random() * 1000000),
+                    text,
+                    done: false,
+                    date: new Date(),
+                }
+                const newDatalist = [newItem, ...this.state.datalist]
+                this.setState({
+                    datalist: newDatalist
+                })
+
+                console.log('datalist=', this.state.datalist)
+            }
+
+            render() {
+                return (
+                    <div>
+                        <TodoContent datalist={this.state.datalist} />
+                        <TodoForm addItem={this.addItem} />
+                    </div>
+                )
+            }
+        }
+
+        function TodoContent(props) {
+            console.log('TodoContent.props=', props);
+            return (
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>待办事项</th>
+                                <th>是否完成</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/*<tr></tr>
+                            <tr></tr>
+                            <tr></tr>*/}
+                            {
+                                props.datalist.map((item, idx) => <TodoItem key={item.id} data={item} index={idx} />)
+                            }
+
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
+                </div>
+            )
+        }
+
+        function TodoItem({ data, index }) {
+            console.log('TodoItem.props=', data)
+            return (
+                <tr>
+                    <td>{index + 1}</td>
+                    <td>{data.text}</td>
+                    <td>{data.done ? '是' : '否'}</td>
+                    <td>
+                        <button>完成</button>
+                        <button>删除</button>
+                    </td>
+                </tr>
+            )
+        }
+
+        // function TodoForm({addItem}){
+        //     const add = function(){
+                    // 非受控组件写法
+        //         let text = document.querySelector('textarea').value;
+        //         addItem(text)
+        //     }
+        //     return (
+        //         <div>
+        //             <textarea></textarea>
+        //             <div><button onClick={add}>添加</button></div>
+        //         </div>
+        //     )
+        // }
+        class TodoForm extends React.Component {
+            constructor(){
+                super()
+                this.state = {
+                    // 给表单元素的值绑定组件的状态，必须同时提供修改值的方法
+                    text:'abc'
+                }
+                this.add = this.add.bind(this);
+                this.changeText = this.changeText.bind(this);
+            }
+            add() {
+                // let text = document.querySelector('textarea').value;
+                this.props.addItem(this.state.text);
+
+                // 清空
+                this.setState({
+                    text:''
+                });
+
+                // 自动获得焦点（只能节点操作）
+                // ref
+                // document.querySelector('textarea').focus();
+                this.textarea.focus();
+            }
+            changeText(e){
+                this.setState({
+                    text: e.currentTarget.value
+                })
+            }
+            render() {
+
+                return (
+                    <div>
+                        <textarea ref={(el)=>this.textarea=el} value={this.state.text} onChange={this.changeText}></textarea>
+                        <div><button onClick={this.add}>添加</button></div>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(
+            <TodoList />
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+
+</html>
