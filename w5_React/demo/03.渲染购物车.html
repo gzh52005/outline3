@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渲染购物车</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+    <h1>渲染购物车</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        let goodslist = [
+            {name:'假发',price:50,qty:7,id:1},
+            {name:'霸王洗发水',price:30,qty:7,id:2},
+            {name:'格子衬衫',price:35,qty:5,id:3}
+        ]
+
+        // React.createElement()
+        // goodslist = [<li>11</li>,<li>12</li>]
+        // goodslist = goodslist.map(item=>{
+        //     return <li>{item.name}</li>
+        // })
+
+        // 计算总价
+        const totalPrice = goodslist.reduce((prev,item,idx,arr)=>{
+            return prev+item.price*item.qty
+        },0)
+        ReactDOM.render(
+            <div className="shoppingcart">
+                <ul>
+                {
+                    goodslist.map(item=>(
+                        <li key={item.id}>
+                            <h4>{item.name}</h4>
+                            <p className="price">
+                                <span>{item.price}</span> &times; {item.qty}
+                            </p>
+                            <button>删除</button>
+                        </li>
+                    ))
+                }
+                </ul>
+                <div>总价：{totalPrice.toFixed(2)}</div>
+            </div>
+            ,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>

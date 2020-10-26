@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX的使用</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+    <h1>JSX的使用</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        /**
+            * 创建节点：React.createElement(type,props,children)
+                * <div>标准用法</div>
+                * <div id="box" class="box">标准用法</div>
+                * <div id="box" class="box"><h4>高级用法</h4></div>
+                * <div id="box" class="box"><h4>终极用法</h4><ul class="datalist"><li>data1</li><li>data2</li></ul></div>
+            * 渲染：ReactDOM.render(vNode,target)
+        */
+       const style = {color:'#f00',fontSize:50};
+       let title = <h4 style={style}>究级用法</h4>; //React.createElement('h4',null,'终极用法')
+       
+        ReactDOM.render(
+            // React.createElement(
+            //     'div',
+            //     {id:'box',className:'box'},
+            //     [
+            //         React.createElement('h4',null,'终极用法'),
+            //         React.createElement(
+            //             'ul',
+            //             {className:'datalist'},
+            //             [
+            //                 React.createElement('li',null,'data1'),
+            //                 React.createElement('li',null,'data2'),
+            //             ]
+            //         ),
+            //     ]
+            // )
+            <div className="box" id="box">
+                <h4>终极用法</h4>
+                {title}
+                <ul className="datalist">
+                    <li>data1</li>
+                    <li>data1</li>
+                </ul>
+                <label htmlFor="username"></label>
+                <input type="text" id="username" />
+                <img src="" />
+            </div>
+            ,
+            // 挂载节点
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>

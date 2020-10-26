@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用React</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <h1>使用React</h1>
+    <div id="app"></div>
+    <script>
+        /**
+            * 创建节点：React.createElement(type,props,children)
+                * <div>标准用法</div>
+                * <div id="box" class="box">标准用法</div>
+                * <div id="box" class="box"><h4>高级用法</h4></div>
+                * <div id="box" class="box"><h4>终极用法</h4><ul class="datalist"><li>data1</li><li>data2</li></ul></div>
+            * 渲染：ReactDOM.render(vNode,target)
+        */
+        ReactDOM.render(
+            // 渲染内容：React虚拟节点
+            // React.createElement('div',null,'标准用法')
+            // React.createElement('div',{id:'box',className:'box'},'标准用法')
+            // React.createElement(
+            //     'div',
+            //     {id:'box',className:'box'},
+            //     React.createElement('h4',null,'高级用法')
+            // )
+            React.createElement(
+                'div',
+                {id:'box',className:'box'},
+                [
+                    React.createElement('h4',null,'终极用法'),
+                    React.createElement(
+                        'ul',
+                        {className:'datalist'},
+                        [
+                            React.createElement('li',null,'data1'),
+                            React.createElement('li',null,'data2'),
+                        ]
+                    ),
+                ]
+            )
+            ,
+            // 挂载节点
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>
