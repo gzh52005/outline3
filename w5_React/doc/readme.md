@@ -120,4 +120,127 @@
     * 回调函数写法
     ```js
         <button ref={el=>this.el=el}>点我</button>
-    ``
+    ```
+
+## day5-2
+
+### 面试题
+* call、apply、bind的异同
+    * 共同点
+        * 都能改变this指向
+        * 都是函数的原型方法
+    * 不同点
+        * call和apply都会调用函数，bind不会调用
+        * call和apply得到函数的返回值，bind得到一个新的函数
+        * bind改变this指向只认第一次
+        * apply只能传递一个参数，参数只能为数组，call和bind传递参数一致
+        ```js
+            fn.apply(window,[1,2,3,4])
+            fn.call(window,1,2,3,4)
+            fn.bind(window,1,2,3,4)
+        ```
+
+### 复习
+* 模块化规范
+    * commonJS
+    * AMD/CMD
+    * ESModule
+* JSX
+    > 原理：React.createElement创建的虚拟节点
+    * 规则
+    * 编译规则
+        * 遇到尖括号以html方式解析
+        * 遇到花括号以js方式解析
+* 组件
+    * 函数组件（无状态组件，UI组件）
+        * 必须有返回值
+    * 类组件（状态组件，容器组件）
+        * 必须包含render
+        * render必须有返回值
+        * this
+        * state
+    * 组件通讯
+        * 父->子：props
+            1. 父组件操作：给子组件定义属性并传递数据
+            2. 子组件操作：获取
+                * 函数组件：函数的第一个参数
+                * 类组件：this.props
+        * 子->父：props
+            1. 父组件操作：给子组件定义属性并传递方法
+            2. 子组件操作：接收父组件传入的方法并执行（执行时可传递数据）
+* react 组件的数据挂载方式
+    * 数据挂载：{}
+    * 条件渲染：三元运算
+    * 列表循环
+        * map()
+        * filter()
+    * 事件绑定
+        * 事件名使用驼峰写法
+        * this指向
+            * bind
+        * event: 事件处理函数的最后一个参数
+        * 事件处理函数传参
+            * bind
+    * ref
+        * 回调函数
+
+* props
+    * 获取
+        * 函数组件：函数的第一个参数
+        * 类组件：
+            * this.props
+            * constructor的第一个参数
+    * chilren：一般用户组件封装
+        * undefined：单标签或双标签空内容
+        * Object：只有一个子元素
+        * Array:多个子元素
+    > PS：不要尝试去修改props的数据
+* state
+    * 获取：this.state.xxx
+    * 修改：this.setState()
+        > 修改规则：创建新数据覆盖旧数据
+        
+
+
+### 知识点
+* react组件什么时候会刷新
+    1. state改变
+    2. props改变
+
+* 组建通讯
+    * 父->子：props
+    * 子->父：props
+    * 兄弟->兄弟：状态提升（把数据放到他们共同的父级）
+    * 深层次组件通讯
+        * 逐层传递（不推荐）
+        * Context
+            1. 创建context：
+                ```js
+                    // defaultData：默认共享数据，缺少第二步时就得到defaultData
+                    const Context = React.createContext(defaultData)
+                ```
+            2. 父组件操作：Provider共享数据
+                ```js
+                    <Context.Provider value="共享的数据">
+                        // 子组件
+                    </Context.Provider>
+                ```
+            3. 子组件操作：
+                * Consumer接收数据：适用于函数组件与类组件
+
+                    ```js
+                        <Context.Consumer>
+                            {
+                                (value)=>{
+
+                                }
+                            }
+                        <Context.Consumer>
+                    ```
+                * this.context接收数据：只能用在类组件中
+                    ```js
+                        // 给类组件添加静态属性contextType，值为Context
+
+                        TodoFrom.contextType = Context;
+                    ```
+                * 只适用于函数组件的方式
