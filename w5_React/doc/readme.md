@@ -139,6 +139,13 @@
             fn.call(window,1,2,3,4)
             fn.bind(window,1,2,3,4)
         ```
+* hash路由的原理
+    > 核心：window.onhashchange（事件触发条件）
+    ```js
+
+    ```
+* webpack与gulp的区别
+    * gulp是基于任务的构建工具，webpack是基于配置的构建工具
 
 ### 复习
 * 模块化规范
@@ -244,3 +251,26 @@
                         TodoFrom.contextType = Context;
                     ```
                 * 只适用于函数组件的方式
+
+* 从0搭建基于webpack的React环境
+    * 创建目录
+        * dist
+        * public
+        * src
+        * webpack.config.js
+        * package.json
+    * 安装依赖
+        * react & react-dom
+        * webpack & webpack-cli & webpack-dev-server
+        * @babel/core & babel-loader & @babel/preset-react
+        * html-webpack-plugin
+    * 配置webpack： webpack是一个基于配置的构建工具
+        > 在根目录下创建webpack.config.js（webpack配置文件），webpack配置文件是一个遵循commonJS规范模块
+        ```js
+            module.exports = {
+                // webpack配置
+            }
+        ```
+    * webpack的工作原理：
+* npm script
+    * package.json下的scripts配置

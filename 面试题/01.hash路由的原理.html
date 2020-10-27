@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash路由的原理</title>
+</head>
+
+<body>
+    <h1>Hash路由的原理</h1>
+    <div id="app"></div>
+    <script>
+        /**
+            * hash路由
+                * 核心事件：hashchange
+            * history路由
+                * window.history
+                    * state
+         */
+        const routes = [{
+            path: '/home',
+            component: `<div>Home</div>`
+        }, {
+            path: '/mine',
+            component: `<div>Mine</div>`
+        }, {
+            path: '/reg',
+            component: `<div>注册</div>`
+        }, {
+            path: '/login',
+            component: `<div>登录</div>`
+        }, {
+            path: '/notfound',
+            component: `<div>404</div>`
+        }]
+
+        jump();
+        window.onhashchange = function () {
+            console.log(666);
+            // 获取当前hash值
+            jump();
+        }
+
+        function jump() {
+            const hash = window.location.hash.slice(1); // #/home
+            let currentRouter = routes.filter(item => item.path === hash)[0]
+            if (!currentRouter) {
+                currentRouter = routes.filter(item => item.path === '/notfound')[0]
+                location.hash = currentRouter.path;
+            }
+            app.innerHTML = currentRouter.component
+        }
+    </script>
+</body>
+
+</html>
