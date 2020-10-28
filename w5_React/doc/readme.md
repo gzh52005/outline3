@@ -274,3 +274,88 @@
     * webpack的工作原理：
 * npm script
     * package.json下的scripts配置
+
+## day5-3
+
+### 面试题
+* vue组件局部样式实现的原理
+    * 添加了scoped属性的组件会给组建内所有的html标签添加`data-v-[hash]`自定义属性，并把样式编译成属性选择器，达到只有当前组件才能匹配的样式
+    ```js
+        // home.vue
+        <template></template>
+        <script></script>
+        <style scoped>
+            button{color:#f00}
+        </style>
+    ```
+
+### 复习
+* webpack
+    * 工作原理：把项目当做一个整体，通过入口文件（如：index.js）分析整个项目结构，找到所有依赖模块，并利用配置好的加载器、插件处理这些模块，最后打包为一个（或多个）浏览器可识别的文件
+    * 常用配置
+        * entry
+        * output
+        * loader
+            > module.rules
+        * devServer
+            * contentBase
+            * port
+            * proxy
+        * plugins
+* 从0配置基于webpack的React项目环境
+    * 创建目录
+    * 安装依赖
+        * react + react-dom
+        * webpack + webpack-cli + webpack-dev-server
+        * @babel/preset-react + babel-loader + @babel/core
+        * html-webpack-plugin
+    * npm script
+        > 运行格式: `npm run xxx`
+        * test
+            * 单元测试
+            * 点对点/端对端测试
+        * start
+
+### 知识点
+* setState
+    * setState(nextState[,callback])
+    * setState(()=>{return nextState}[,callback])
+
+
+#### 模块化开发
+* 模块化开发规范
+    * commonJS
+    * AMD/CMD
+    * ESModule
+
+* 为什么需要模块化开发
+    * 分工
+    * 迭代
+    * 复用
+* javascript以前是没有模块化，所以需要使用第三方工具来实现模块化，直到ES6的出现，ES6带来了模块化开发规范：ESModule
+    * require.js
+    * sea.js
+* 对于不支持ESModule的浏览器，可以使用webpack/gulp等构建工具编译成浏览器支持的代码
+
+* ES Module
+    > 注意：需要在服务器的环境下才能使用，ESModule规范把每个文件当作一个模块（**模块对象**），一个模块就是一个对象，每一个模块作用域是独立，要使用内部的变量，必须导出（export）并引入（import）
+    * 使用方式
+        * html文件中使用（需要浏览器支持ESModule）
+        * webpack中使用（webpack会编译成浏览器支持的代码）
+    * 引入：import 
+        > url只能是相对路径或绝对路径
+        ```js
+            import request form url       // 引入模块对象中的default属性
+            import {username} from url    // 引入模块对象中的username属性
+            import {username as name} from url  // 引入模块对象中的username属性并改名为name
+        ```
+    * 导出：export
+        > export后只能跟：let,const,var,function,class,default,{}
+        * default比较特殊，使用default后引入的方式与其他不一样
+        ```js
+            export let username='laoxie' ;  // 给<模块对象>添加username属性
+            export function getData(){}     // 给模块对象添加getData方法
+            export class person{}           // 给模块对象添加person属性
+            export default request          // 给模块对象添加default属性
+            export {a,b}                    // 给模块对象添加a属性和b属性(批量添加)
+        ```

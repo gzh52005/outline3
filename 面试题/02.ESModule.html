@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESModule</title>
+</head>
+<body>
+    <h1>ESModule</h1>
+    <script type="module">
+        import request from './module/request.js';
+    
+        import {baseUrl as base} from './module/api.js'
+
+        // 获取一个模块对象
+        import * as mobj from './module/api.js';
+
+        console.log('mobj=',mobj);
+        console.log('request=',request)
+        console.log('baseUrl=',base)
+    </script>
+    <script src="./module/request.js" type="module"></script>
+</body>
+</html>
