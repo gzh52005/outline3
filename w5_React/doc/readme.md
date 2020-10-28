@@ -288,6 +288,35 @@
             button{color:#f00}
         </style>
     ```
+* Vue/React中key的作用
+    * 使用key的场景：同级别同类型的节点
+    * 虚拟DOM
+        * diff算法：对比前后状态（对象）,找出差异项，只更新差异部分内容
+    * key作用：用于识别虚拟节点，让diff算法更加高效
+
+    ```js
+        this.price = 100
+        this.price = 10
+        this.price = 100
+
+        {
+            id:10,
+            price:100
+            name:'xxx'
+        }
+
+        {
+            id:10,
+            price:10,
+            name:'xxx'
+        }
+
+    ```
+* 影响页面性能的因素
+    * 节点的数量
+    * 节点的频繁操作
+    * 事件数量
+    * ....
 
 ### 复习
 * webpack
@@ -359,3 +388,23 @@
             export default request          // 给模块对象添加default属性
             export {a,b}                    // 给模块对象添加a属性和b属性(批量添加)
         ```
+
+#### 生命周期函数(钩子函数)
+> 组件从创建到销毁的过程，只能在类组件中使用
+
+* 初始化阶段
+    * constructor()
+* 挂载阶段
+    * componentWillMount（不推荐）
+    * componentDidMount         
+* 更新阶段
+    * componentWillUpdate（不推荐）       
+    * componentDidUpdate        
+* 销毁阶段
+    * componentWillUnmount      
+* 特殊生命周期函数
+    * componentWillReceiveProps（不推荐）
+    * shouldComponentUpdate
+        > 必须返回一个Boolean（默认返回true），一般用于性能优化
+
+> 注意：了解每个生命周函数的执行过程，每个生命周期函数适合做什么操作

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03节点频繁操作对页面性能的影响</title>
+</head>
+<body>
+    <h1>03节点频繁操作对页面性能的影响</h1>
+
+    <div class="box">1</div>
+    <script>
+        /**
+            节点操作数量    花费时间
+            3w              1000ms
+            2w              900ms
+            1w              20ms
+            3               3ms
+
+
+            Vue/React       数据驱动（用户只需修改数据，节点操作交给框架来处理）
+                * 虚拟DOM(虚拟节点的集合)
+                    * diff算法
+         */
+        console.time('mytime')
+        const box = document.querySelector('.box')
+        let num = box.innerText;
+        for(let i=0;i<10000;i++){
+            num++
+        }
+        box.innerText = num;
+        console.timeEnd('mytime')
+
+    </script>
+</body>
+</html>
