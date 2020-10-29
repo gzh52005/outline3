@@ -459,6 +459,35 @@
             return this
         }   
     ```
+* 前端的本地存储方式
+    * cookie
+    * webStorage
+    * indexDB
+    * webSQL
+```js
+    // 跨域cookie
+    Access-Control-Allow-Origin="*"
+    // Access-Control-Allow-Methods
+    // Access-Control-Allow-Headers
+    Access-Control-Allow-Credentials = true
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('get',url,true);
+    xhr.withCredentials = true;
+    xhr.send()
+    
+    // axios
+    axios.get(url,{
+        ...
+       withCredentials:true
+    })
+    
+    // fetch
+    fetch(url,{
+        ...
+        credentials: 'include'
+    })
+```
 
 ### 复习
 * key的作用
@@ -506,3 +535,43 @@
     * shouldComponentUpdate
     * PureComponent
         > 与Component的区别：做了shouldComponentUpdate优化的Component
+
+* react-router：一切皆组件
+    * 路由类型
+        * HashRouter
+        * BrowserRouter
+    * 路由渲染
+        * Route
+            > Route组件必须放在路由类型组件中
+            * path
+            * component
+            * render
+            * exact
+        * Redirect
+            * from
+            * to
+            * exact
+        * Switch
+    * 路由跳转
+        * Link
+    ```js
+        // Vue-Router
+        let router = new VueRouter({
+            //..
+            mode:'hash',// history
+            routes:[
+                {path:'/home',component:Home},
+                {path:'/login',component:Login},
+                {path:'/reg',component:Reg},
+            ]
+
+        })
+
+        // 注入根实例
+        new Vue({
+            //...
+            router
+        })
+
+        this.$router/this.$route
+    ```
