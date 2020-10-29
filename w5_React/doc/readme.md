@@ -408,3 +408,101 @@
         > 必须返回一个Boolean（默认返回true），一般用于性能优化
 
 > 注意：了解每个生命周函数的执行过程，每个生命周期函数适合做什么操作
+
+## day5-4
+
+### 面试题
+* for/for..in/for..of的区别
+```js
+    // v-for="item in arr"
+    // for一般用于数组遍历
+    // for...in一般用于对象遍历
+    // for...of一般用于具有迭代特性的数据
+```
+* getElementsByTagName与querySelectorAll区别
+```js
+    let links1 = document.getElementsByTagName('a'); //HTMLCollection：105 -> 106
+    let links2 = document.querySelectorAll('a'); //NodeList: 105 -> 105
+
+    document.body.appendChild(document.createElement('a'))
+    links1.forEach();// forEach is not a function
+    linkss.forEach();// 可以遍历
+```
+* jquery中attr()与prop()方法的区别
+    * attr()对应原生js中的**getAttribute()/setAttribute()**：用于获取/设置html属性
+    * prop()对应原生js中的**点语法**：用于获取/设置节点属性
+    ```js
+        // <a href="http://laoxie.com"></a>
+        let link = document.querySelector('a');
+        link.getAttribute('href');//得到：http://laoxie.com，等效于link.href
+        link.setAttribute('href','http://jingjing.com');// 设置属性，等效于link.href='http://jingjing.com'
+
+        <input type="checkbox" checked>
+        $('input').attr('checked','checked')
+        $('input').prop('checked',true);
+    ```
+* jquery中链式调用的原理
+    ```js
+        $('a').addClass('link').attr('username','laoxie').on('click',()=>{
+            
+        })
+
+        jQuery.prototype.addClass = function(){
+
+            return this
+        }
+
+        jQuery.prototype.attr = function(){
+            return this
+        }
+        jQuery.prototype.on = function(){
+            return this
+        }   
+    ```
+
+### 复习
+* key的作用
+    * 虚拟DOM（diff算法）
+* 生命周期： 类组件
+    * 初始化节点
+        * constructor()
+    * 挂载阶段
+        * componentWillMount -> UNSAFE_componentWillMount （不推荐）
+        * componentDidMount
+    * 更新阶段
+        * componentWillReceiveProps -> UNSAFE_componentWillReceiveProps （不推荐）
+        * shouldComponentUpdate
+        * componentWillUpdate -> UNSAFE_componentWillUpdate （不推荐）
+        * componentDidUpdate
+    * 销毁阶段
+        * componentWillUnmount
+* 生命周期函数执行过程
+    * 初始化
+        1. constructor
+        2. UNSAFE_componentWillMount
+        3. render
+        4. componentDidMount
+    * 更新
+        * props更新
+            1. UNSAFE_componentWillReceiveProps
+            2. shouldComponentUpdate
+            3. UNSAFE_componentWillUpdate
+            4. componentDidUpdate
+        * state更新
+            1. shouldComponentUpdate
+            2. UNSAFE_componentWillUpdate
+            3. componentDidUpdate
+    > 思考：父子组件生命周期函数的执行顺序是怎么执行的？
+### 知识点
+* 组件什么时候会刷新
+    1. state改变
+    2. props改变
+    3. 父组件刷新（当前组件依赖的props数据没有改变）
+        > 这种情况必须优化
+    4. 强制刷新：this.foreUpdate()
+        > 不经过shouldComponentUpdate直接render
+* 性能优化
+    > 节点操作无法避免，但可以减少
+    * shouldComponentUpdate
+    * PureComponent
+        > 与Component的区别：做了shouldComponentUpdate优化的Component

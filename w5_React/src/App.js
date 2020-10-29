@@ -8,14 +8,16 @@ class App extends React.Component{
     constructor(){
         super()
         this.state = {
-            num:10
+            num:10,
+            status:false
         }
     }
 
     componentDidMount(){
         setTimeout(()=>{
             this.setState({
-                num:20
+                num:20,
+                status:true
             })
         },5000)
     }
@@ -23,7 +25,7 @@ class App extends React.Component{
     render(){
         return (
         <div>
-            App: {this.state.num}
+            App: {this.state.num} , {this.state.status ? '刷新成功':'ready'}
             <TodoList/>
             <Home num={this.state.num}/>
         </div>// React.createElement()

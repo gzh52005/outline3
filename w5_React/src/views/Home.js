@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React,{Component,PureComponent} from 'react'
 // import * as ReactAll from 'react'
 // console.log('ReactAll=',ReactAll)
 
@@ -57,6 +57,9 @@ class Home extends Component{
                     qty:this.state.qty+1
                 })
             }}>qty:{qty}</button>
+            <button onClick={()=>{
+                this.forceUpdate()
+            }}>强制刷新</button>
         </div>
     }
 }
