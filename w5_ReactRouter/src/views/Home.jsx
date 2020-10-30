@@ -1,5 +1,6 @@
 import React from 'react'
 
+import {withUser} from '../utils/hoc'
 function Home(props){
     console.log('Home.props',props)
     const goto = function(path){
@@ -14,5 +15,6 @@ function Home(props){
     )
 }
 
+Home = withUser(Home)
 
 export default Home;

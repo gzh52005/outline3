@@ -30,7 +30,9 @@ module.exports = {
                     options:{
                         // @babel/preset-react用于把JSX转成JS
                         presets:['@babel/preset-react'],
-                        // plugins:[]
+                        plugins:[
+                            ['@babel/plugin-proposal-decorators',{legacy: true}]
+                        ]
                     }
                 }]
             },

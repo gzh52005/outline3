@@ -635,30 +635,67 @@
         vm.user[3] = 'linejie'
 
     ```
+* computed与watch的区别
+    ```js
+        <template>
+            <div>{{b}}</div>
+        </template>
+        new Vue({
+            data:{
+                a:10,
+                c:20
+            },
+            watch:{
+                a:function(newValue,oldValue){
+                    
+                }
+            },
+            computed:{
+                // computed有缓存的特性
+                b:function(){
+                    // 耗费资源的复杂操作
+                    return this.a;
+                }
+            }
+        })
+        //this.a = 100;
+        this.c = 200
+    ```
+* 移动端适配方案
+    * 缩放布局
+        * rem布局
+        * vw/vh/vmin/vmax
+        > 使用大屏幕是为了看更多的内容而不是更大内容
+    * 响应式布局
+    * 自适应布局
+    * 弹性盒
+    * 百分比
+    * ....
+    > 一个完美的移动端适配方案不是单一的解决方案，而是所有解决方案的综合体
 
-    ### 复习
-    * react-router常用组件
-        * 路由类型
-            * HashRouter
-            * BrowserRouter
-        * 路由渲染
-            * Route
-                * path
-                * component
-                * exact
-            * Redirect
-                * from
-                * to
-                * exact
-            * Switch
-        * 路由跳转
-            * Link
-                * to
-                * replace
-            * NavLink
-                * to
-                * activeStyle
-                * activeClassName
+### 复习
+* react-router常用组件
+    * 路由类型
+        * HashRouter
+        * BrowserRouter
+    * 路由渲染
+        * Route
+            * path
+            * component
+            * exact
+        * Redirect
+            * from
+            * to
+            * exact
+        * Switch
+    * 路由跳转
+        * Link
+            * to
+            * replace
+        * NavLink
+            * to
+            * activeStyle
+            * activeClassName
 * 路由跳转
     * 声明式导航
         > 利用组件实现跳转
@@ -692,3 +729,48 @@
         randomNumber(10,20);//14
     ```
     * 定义高阶组件
+        * 定义方式一： 属性代理
+        ```js
+            // 封装获取本地数据的高阶组件
+            function Login(){
+                const user = {username:'laoxie',password:123456,role:'admin'}
+                localStorage.setItem('currentUser',JSON.stringify(user))
+                return <div>登录</div>
+            }
+
+            function Mine(props){
+                //let data = localStorage.getItem('currentUser');
+                //let currentUser
+                //try{
+                //    currentUser = JSON.parse(data);
+                //}catch(err){
+                //    currentUser = data;
+                //}
+                return <div>我的{props.currentUser.username}</div>
+            }
+            Mine = withUser(Mine)
+
+            function Home(props){
+                // props.currentUser => {username:'laoxie',password:123456,role:'admin'}
+                return <div>{props.currentUser.username}</div>
+            }
+            Home = withUser(Home)
+
+
+            // 高阶组件
+            function withUser(InnerComponent){
+                return function OuterComponent(){
+                    // 为所欲为
+                    let data = localStorage.getItem('currentUser');
+                    let currentUser
+                    try{
+                        currentUser = JSON.parse(data);
+                    }catch(err){
+                        currentUser = data;
+                    }
+                    return <InnerComponent currentUser={curerntUser}/>
+                    // return <Home currentUser={currentUser} />
+                }
+            }
+
+        ```
