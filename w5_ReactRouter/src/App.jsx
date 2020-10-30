@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {HashRouter,BrowserRouter,Route,Redirect,Switch,Link,NavLink} from 'react-router-dom';
+import {HashRouter,BrowserRouter,Route,Redirect,Switch,Link,NavLink,withRouter} from 'react-router-dom';
 
 // 引入页面组件
 import Home from './views/Home'
@@ -10,7 +10,8 @@ import Mine from './views/Mine'
 
 import './App.scss';
 
-function App(){
+function App(props){
+    console.log('App.props=',props)
     const menu = [{
         path:'/home',
         text:'首页'
@@ -23,19 +24,24 @@ function App(){
     },{
         path:'/reg',
         text:'注册'
-    }]
+    }];
+
+    const goto = (path)=>{
+        props.history.push(path)
+    }
     return (
         <div>
             App
             <nav>
                 <ul>
                     {
-                        menu.map(item=><li key={item.path}>
-                            <NavLink 
+                        menu.map(item=><li key={item.path} onClick={goto.bind(null,item.path)}>
+                            {/* <NavLink 
                             // activeStyle={{color:'#f00',fontSize:50}}
                             activeClassName="active"
                             to={item.path}
-                            >{item.text}</NavLink>
+                            >{item.text}</NavLink> */}
+                            {item.text}
                         </li>)
                     }
                 </ul>
@@ -56,4 +62,6 @@ function App(){
     )
 }
 
-export default App;
+const NewApp = withRouter(App)
+
+export default NewApp;

@@ -575,3 +575,120 @@
 
         this.$router/this.$route
     ```
+
+## day5-5
+
+### 面试题
+* 父子组件生命周期函数的执行顺序是怎么执行的
+    * React
+        1. 父组件constructor
+        2. 父组件componentWillMount
+        3. 父组件的render
+        4. 子组件constructor
+        5. 子组件componentWillMount
+        6. 子组件render
+        7. 子组件的componentDidMount
+        8. 父组件的componentDidMount
+    * Vue
+        1. 父组件beforeCreate
+        2. 父组件created
+        3. 父组件beforeMount
+        4. 子组件beforeCreate
+        5. 子组件created
+        6. 子组件beforeMount
+        7. 子组件mounted
+        8. 父组件mounted
+* MVVM的原理
+    * 分层
+        * M：Model          数据层
+        * V：View           视图层
+        * VM: ViewModel     Vue/React框架
+    * 原理
+        * 监听
+            * 对象
+                * Object.defineProperty()   缺陷
+                * Proxy
+            * 数组
+        * 渲染
+
+    ```js
+        <template>
+            <div>
+                {{a}}
+
+                {{users}}
+            </div>
+        </template>
+        vm = new Vue({
+            data:{
+                a:10,
+                users:['laoxie','jingjing','xiaoxie']
+            },
+            created(){
+                this.a = 20
+            }
+        })
+
+        vm.a = 20;//
+        vm.b = 100
+        // vm.user.push('linejie');
+        vm.user[3] = 'linejie'
+
+    ```
+
+    ### 复习
+    * react-router常用组件
+        * 路由类型
+            * HashRouter
+            * BrowserRouter
+        * 路由渲染
+            * Route
+                * path
+                * component
+                * exact
+            * Redirect
+                * from
+                * to
+                * exact
+            * Switch
+        * 路由跳转
+            * Link
+                * to
+                * replace
+            * NavLink
+                * to
+                * activeStyle
+                * activeClassName
+* 路由跳转
+    * 声明式导航
+        > 利用组件实现跳转
+        * Link
+        * NavLink
+    * 编程式导航
+        > 利用js实现跳转
+        * 跳转方法
+            * history.push()
+            * history.replace()
+        * 重点：如何获取history、location、match对象
+            * 组件通过Route的component属性渲染，以上三个对象自动传入props
+            * withRouter高阶组件（包装函数）
+
+* 高阶组件HOC（High Order Component）
+    > 不是一个组件，而是一个用来包装组件的函数(高阶函数/纯函数)，并且必须返回一个新的函数
+    * 纯函数
+        1. 不修改传入的参数
+        2. 固定输入有固定输出
+    ```js
+        function sum(a,b){
+            return a+b;
+        }
+        sum(1,2);//3
+        sum(1,2);//3
+
+        function randomNumber(min,max){
+            return parseInt(Math.random()*(max-min+1))+min
+        }
+        randomNumber(10,20);//10
+        randomNumber(10,20);//14
+    ```
+    * 定义高阶组件

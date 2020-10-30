@@ -1,8 +1,16 @@
 import React from 'react'
 
-function Home(){
+function Home(props){
+    console.log('Home.props',props)
+    const goto = function(path){
+        props.history.push(path)
+    }
     return (
-        <div>Home</div>
+        <div>
+            Home
+            <button onClick={goto.bind(null,'/login')}>登录</button>
+            <button onClick={goto.bind(null,'/reg')}>注册</button>
+        </div>
     )
 }
 

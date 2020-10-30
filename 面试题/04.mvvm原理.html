@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04.mvvm原理</title>
+    <script src="https://lib.baomitu.com/vue/2.6.12/vue.js"></script>
+</head>
+<body>
+    <h1>04.mvvm原理</h1>
+
+    <div id="app">
+        num: {{num}}
+
+        <p>jingjing: {{JSON.stringify(user)}}</p>
+        <p>
+            users: {{users}}
+        </p>
+    </div>
+    <script>
+        /**
+            MVVM的原理
+                 * 分层
+                    * M：Model          数据层
+                    * V：View           视图层
+                    * VM: ViewModel     Vue/React框架
+                * 原理
+                    * 1. 监听
+                        * 对象
+                            * Object.defineProperty()   缺陷
+                            * Proxy
+                        * 数组 
+                    * 2. 渲染 
+         */
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                num:10,
+                user:{
+                    username:'jingjing',
+                    password:123,
+                    age:32
+                },
+                users:['laoxie','jingjing','xiaoxie']
+            }
+        })
+       
+    </script>
+</body>
+</html>
