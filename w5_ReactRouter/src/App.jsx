@@ -2,13 +2,16 @@ import React from 'react';
 
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom';
 
-import { Menu } from 'antd';
+import { Menu,Row,Col,Button } from 'antd';
 
 // 引入页面组件
 import Home from './views/Home'
 import Login from './views/Login'
 import Reg from './views/Reg'
 import Mine from './views/Mine'
+import Random from './views/Random'
+import Add from './views/Add'
+import IQ from './views/IQ'
 
 import 'antd/dist/antd.css'
 import './App.scss';
@@ -81,14 +84,14 @@ class App extends React.Component {
                 path: '/home',
                 text: '首页'
             }, {
+                path: '/random',
+                text: '随机面试题'
+            }, {
+                path: '/add',
+                text: '添加面试题'
+            }, {
                 path: '/mine',
                 text: '我的'
-            }, {
-                path: '/login',
-                text: '登录'
-            }, {
-                path: '/reg',
-                text: '注册'
             }],
             currentPath: '/home'
         }
@@ -118,18 +121,27 @@ class App extends React.Component {
         const { menu, currentPath } = this.state;
         return (
             <div>
-                <Menu 
-                mode="horizontal" 
-                theme="dark" 
-                selectedKeys={[currentPath]}
-                onClick={this.changeMenu}
-                >
-                    {
-                        menu.map(item => <Menu.Item key={item.path} onClick={this.goto.bind(null, item.path)}>
-                            {item.text}
-                        </Menu.Item>)
-                    }
-                </Menu>
+                <Row style={{backgroundColor:'#001529'}}>
+                    <Col xs={15} sm={16}>
+                        <Menu 
+                            mode="horizontal" 
+                            theme="dark" 
+                            selectedKeys={[currentPath]}
+                            onClick={this.changeMenu}
+                            >
+                                {
+                                    menu.map(item => <Menu.Item key={item.path} onClick={this.goto.bind(null, item.path)}>
+                                        {item.text}
+                                    </Menu.Item>)
+                                }
+                        </Menu>
+                    </Col>
+                    <Col xs={9} sm={8} style={{textAlign:'right',lineHeight:'46px'}}>
+                        <Button type="link">注册</Button>
+                        <Button type="link">登录</Button>
+                    </Col>
+                </Row>
+               <div style={{padding:15}}>
                 <Switch>
                     {/*
                         当浏览器路径匹配/home时，渲染Home组件
@@ -138,10 +150,14 @@ class App extends React.Component {
                     <Route path="/login" component={Login} />
                     <Route path="/reg" component={Reg} />
                     <Route path="/mine" component={Mine} />
+                    <Route path="/random" component={Random} />
+                    <Route path="/add" component={Add} />
+                    <Route path="/iq" component={IQ} />
                     <Route path="/notfound" render={() => <div>404</div>} />
                     <Redirect from="/" to="/home" exact />
                     <Redirect to="/notfound" />
                 </Switch>
+                </div>
             </div>
         )
     }

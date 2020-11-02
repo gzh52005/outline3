@@ -774,3 +774,24 @@
             }
 
         ```
+
+## day6-1
+
+### 知识点
+* 查看文档的能力
+    * 技术文档
+        * 接口文档
+        * 官方文档
+    * 需求文档
+* 发起ajax请求
+    * XMLHttpRequest（原生js）
+    * fetch（原生js）
+    * jquery
+    * axios
+* 专业术语
+    * 二次封装
+    * hard code
+* fetch的封装
+
+* 路由传参
+    * search
