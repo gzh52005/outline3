@@ -12,6 +12,7 @@ import Mine from './views/Mine'
 import Random from './views/Random'
 import Add from './views/Add'
 import IQ from './views/IQ'
+import IQDetail from './views/IQDetail'
 
 import 'antd/dist/antd.css'
 import './App.scss';
@@ -137,8 +138,8 @@ class App extends React.Component {
                         </Menu>
                     </Col>
                     <Col xs={9} sm={8} style={{textAlign:'right',lineHeight:'46px'}}>
-                        <Button type="link">注册</Button>
-                        <Button type="link">登录</Button>
+                        <Button type="link" onClick={this.goto.bind(this,'/reg')}>注册</Button>
+                        <Button type="link" onClick={this.goto.bind(this,'/login')}>登录</Button>
                     </Col>
                 </Row>
                <div style={{padding:15}}>
@@ -152,6 +153,7 @@ class App extends React.Component {
                     <Route path="/mine" component={Mine} />
                     <Route path="/random" component={Random} />
                     <Route path="/add" component={Add} />
+                    <Route path="/iq/:id" component={IQDetail} />
                     <Route path="/iq" component={IQ} />
                     <Route path="/notfound" render={() => <div>404</div>} />
                     <Redirect from="/" to="/home" exact />

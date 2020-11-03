@@ -51,12 +51,18 @@ class Home extends React.Component {
     goto = (path)=> {
         this.props.history.push(path)
     }
+    gotoDetail = (id,e)=>{
+        // e.preventDefault();
+        this.goto({
+            pathname:'/iq/'+id, //动态路由
+            search:'?id='+id,
+            state:{ // 缺点：刷新后消失
+                id
+            }
+        })
+    }
     render() {
         console.log('Home.props', this.props);
-
-
-
-       
         const { newData, hotData, difData } = this.state;
         return (
             <div>
@@ -74,7 +80,7 @@ class Home extends React.Component {
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                title={item.question}
+                                title={<a onClick={this.gotoDetail.bind(this,item._id)}>{item.question}</a>}
                                 description={`${item.hot}浏览 • ${item.answer}回答`}
                             />
                         </List.Item>
@@ -94,7 +100,7 @@ class Home extends React.Component {
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                title={item.question}
+                                title={<a onClick={this.gotoDetail.bind(this,item._id)}>{item.question}</a>}
                                 description={`${item.hot}浏览 • ${item.answer}回答`}
                             />
                         </List.Item>
@@ -114,7 +120,7 @@ class Home extends React.Component {
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                title={item.question}
+                                title={<a onClick={this.gotoDetail.bind(this,item._id)}>{item.question}</a>}
                                 description={`${item.hot}浏览 • ${item.answer}回答`}
                             />
                         </List.Item>

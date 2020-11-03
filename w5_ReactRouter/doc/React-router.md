@@ -183,7 +183,7 @@ React-router4（以下简称RR4）遵循React的设计万物皆组件的理念�
 ## 路由传参
 
 * search
-* params
+* state
 
 * 动态路由
   >在匹配路径path 的后面加上冒号 + 参数， 如`path ="goods/:id"`

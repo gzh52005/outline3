@@ -1341,6 +1341,11 @@ cross-spawn@^6.0.0, cross-spawn@^6.0.5:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+crypto-js@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/crypto-js/download/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
+  integrity sha1-KQSrJnep0EKFai6i74DekuSjbcw=
+
 css-loader@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/css-loader/download/css-loader-5.0.0.tgz?cache=0&sync_timestamp=1602609200442&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcss-loader%2Fdownload%2Fcss-loader-5.0.0.tgz#f0a48dfacc3ab9936a05ee16a09e7f313872e117"
@@ -3196,7 +3201,7 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.24.0, moment@^2.25.3:
+moment@^2.24.0, moment@^2.25.3, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.npm.taobao.org/moment/download/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=

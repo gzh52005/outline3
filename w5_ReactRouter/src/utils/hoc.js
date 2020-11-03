@@ -11,6 +11,8 @@
  */
 import React from 'react';
 import {Redirect} from 'react-router-dom'
+import request from '@/utils/request'
+import {message} from 'antd'
 
  export function withUser(InnerComponent){
     return function OuterComponent(props){
@@ -22,7 +24,7 @@ import {Redirect} from 'react-router-dom'
         }catch(err){
             currentUser = data;
         }
-        return <InnerComponent {...props} user={currentUser} />
+        return <InnerComponent {...props} currentUser={currentUser} />
     }
  }
 
@@ -48,16 +50,51 @@ export function withStorage(key){
 
 export function withAuth(InnerComponent){
     @withUser
-    class OuterComponent extends InnerComponent{
-        render(){
-            console.log('withAuth.props=',this.props);
-            const {user} = this.props;
-            if(user){
-                return super.render()
+    // 反向继承（要求传入的组件必须为类组件）
+    // class OuterComponent extends InnerComponent{
+    //     render(){
+    //         console.log('withAuth.props=',this.props);
+    //         const {user} = this.props;
+    //         if(user){
+    //             return super.render()
+    //         }
+    //         return <Redirect to="/login" />
+    //     }
+    // }
+    // OuterComponent = withUser(OuterComponent)
+
+
+    class OuterComponent extends React.Component{
+        async componentDidMount(){
+            const {currentUser} = this.props;
+
+            // 校验token
+            if(currentUser){
+                const data = await request.get('/user/verify',{},{
+                    headers:{
+                        Authorization:currentUser.Authorization
+                    }
+                });
+    
+                console.log('verify=',data);
+                if(data.status === 401){
+                    message.error('登录已失效，请重新登录')
+                    this.props.history.replace({
+                        pathname:'/login',
+                        search:'?redirectTo='+this.props.location.pathname
+                    })
+                }
+
             }
-            return <Redirect to="/login" />
+        }
+        render(){
+            const {currentUser} = this.props;
+            if(currentUser){
+                return <InnerComponent {...this.props} />
+            }else{
+                return <Redirect to={"/login?redirectTo="+this.props.location.pathname} />
+            }
         }
     }
-    // OuterComponent = withUser(OuterComponent)
     return OuterComponent
 }

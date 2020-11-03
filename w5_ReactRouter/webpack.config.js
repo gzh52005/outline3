@@ -12,9 +12,15 @@ module.exports = {
         path: path.resolve('./dist')
     },
 
-    // 默认跨站名
     resolve:{
-        extensions:['.js','.jsx']
+        // 默认扩展名
+        extensions:['.js','.jsx'],
+        // 路径别名
+        alias:{
+            '@':path.resolve('./src'),
+            '~':path.resolve('./src/views'),
+            '@c':path.resolve('./src/components'),
+        }
     },
 
     // 加载器loader

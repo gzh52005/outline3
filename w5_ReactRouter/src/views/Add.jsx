@@ -1,4 +1,5 @@
 import React from 'react'
+import {withAuth} from '@/utils/hoc'
 
 function Add(){
     return (
@@ -6,5 +7,5 @@ function Add(){
     )
 }
 
-
+Add = withAuth(Add);
 export default Add;

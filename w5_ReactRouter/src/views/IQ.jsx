@@ -10,20 +10,28 @@ class IQ extends React.Component{
         size:10,
         page:1,
         total:0,
-        sort:'',
-        datalist:[]
+        params:{},
+        datalist:[],
+        loading:false,
     }
     async componentDidMount(){
-        // 获取传入的参数
+        // 获取传入的参数: /iq?sort=addtime&userid=xxx&companyid=xx
         // const urlObj = url.parse(this.props.location.search,true)
         // console.log('search=',urlObj.query)
         const search = this.props.location.search.slice(1)
-        const params = search.split('=');
+        const params = search.split('&').reduce((obj,item)=>{
+            const arr = item.split('=');
+            obj[arr[0]] = arr[1];
+            return obj;
+        },{});
+        console.log('params',params);
+        
         this.setState({
-            sort:params[1]
+            params
+        },()=>{
+            this.getData()
         })
 
-        this.getData()
 
         // // 根据参数请求不同的数据
         // const {data} = await request.get('/iq',{
@@ -54,24 +62,30 @@ class IQ extends React.Component{
             size
         })
     }
-    getData = async (params={})=>{
-        const {size,page,sort,datalist} = this.state
+    getData = async ()=>{
+        const {size,page,params,datalist,loading} = this.state
         // 根据参数请求不同的数据
-        const {data} = await request.get('/iq',{
-            ...params,
-            size,
-            page,
-            sort,
-        })
+        if(!loading){
+            this.setState({
+                loading:true
+            });
+            const {data} = await request.get('/iq',{
+                ...params,
+                size,
+                page,
+            })
+    
+            console.log('data=',data);
+    
+            this.setState({
+                total:data.total,
+                size:data.size,
+                page:data.page,
+                datalist:data.result,
+                loading:false
+            })
 
-        console.log('data=',data);
-
-        this.setState({
-            total:data.total,
-            size:data.size,
-            page:data.page,
-            datalist:data.result
-        })
+        }
     }
     render(){
         console.log('IQ.props',this.props);
