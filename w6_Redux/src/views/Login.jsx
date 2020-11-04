@@ -1,8 +1,10 @@
 import React from 'react'
-import CryptoJS from 'crypto-js';console.log('CryptoJS=',CryptoJS)
+import CryptoJS from 'crypto-js';
 import { Form, Input, Button, Checkbox,message } from 'antd';
+import {connect} from 'react-redux';
 import request from '@/utils/request'
 import {searchFormat} from '@/utils'
+// import store from '@/store'
 
 const layout = {
     labelCol: { span: 6 },
@@ -35,11 +37,16 @@ function Login(props) {
         console.log('data=',data);
         if(data.status === 200){
             
-            if(values.remember){
-                localStorage.setItem('currentUser',JSON.stringify(data.data))
-            }else{
-                sessionStorage.setItem('currentUser',JSON.stringify(data.data))
-            }
+            // if(values.remember){
+            //     localStorage.setItem('currentUser',JSON.stringify(data.data))
+            // }else{
+            //     sessionStorage.setItem('currentUser',JSON.stringify(data.data))
+            // }
+
+            // 更新redux数据
+            // const action = {type:'login',user:data.data,remember:values.remember}
+            // props.dispatch(action)
+            props.login(data.data,values.remember)
 
             const {redirectTo} = searchFormat(props.location.search)
             console.log('redirectTo=',redirectTo)
@@ -93,5 +100,28 @@ function Login(props) {
     )
 }
 
+// 映射state数据到组件的props
+const mapStateToProps = function(state){
+    // state: redux中的状态
+    // 控制传入当前组件的props数据
+    return {
+        Authorization:state.Authorization
+    }
+}
+// 映射修改state的方法到组件的props
+// 当该参数不写时，默认传如dispatch
+const mapDispatchToProps = function(dispatch){
+    return {
+        login(user,remember){
+            const action = {type:'login',user,remember}
+            dispatch(action)
+        },
+        logout(){
+            const action = {type:'logout'}
+            dispatch(action)
+        }
+    }
+}
+Login = connect(mapStateToProps,mapDispatchToProps)(Login)
 
 export default Login;

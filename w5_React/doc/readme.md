@@ -811,3 +811,69 @@
     * state
 * webpack路径别名
     > resolve.alias
+
+
+
+## day6-3
+
+### 知识点
+* redux使用步骤
+    1. 安装redux
+    ```bash
+        yarn add redux --save-dev
+        #or
+        npm install redux -D
+    ```
+    2. 引用redux，并创建store仓库
+    ```js
+        import {createStore} from 'redux'
+
+        // 创建仓库
+        const store = createStore(reducer)
+    ```
+    3. 创建reducer，并初始化state
+    ```js
+        const initState = {}
+        const reducer = function(state=initState,action){}
+    ```
+    4. 导出store
+    5. 操作state
+        * 获取state
+        * 修改state
+
+* redux核心
+    * store     仓库（存放数据的容器）
+        > 通过`createStore()`创建，store中包含以下常用方法
+        * getState()    获取state最新状态 
+        * dispatch()    修改state的唯一方式
+        * subscribe()   监听state修改
+    * state     状态（数据）
+        > 需要定义初始值，初始值可以在createStore的第二个参数定义，也可以在reducer中定义（推荐）
+    * reducer   修改state的方法
+        > 是用来指定修改state的方法
+        * 是一个纯函数（不能修改传入的参数）
+        * 必须返回一个新的state
+    * action    命令（动作）
+        > 是一个对象，格式为：{type:'add_to_cart'}
+
+* react-redux桥接工具
+    > 一个把redux和react组件联系起来的工具
+    * Provider组件
+        > 封装Provider组件，利用context技术共享redux数据
+    * connect高阶组件
+        > 利用高阶组件把redux数据通过props传入组件
+    * 使用react-redux的步骤
+        1. 利用Provider组件传递store
+        ```js
+            import store from '@/store'
+            <Provider store={store}>
+                // 子组件
+            </Provier>
+        ```
+        2. 在组件中利用`connect(mapStateToProps,mapDispatchToProps)`高阶组件定义传入当前组件的props数据
+            * mapStateToProps
+            * mapDispatchToProps
+                > 默认传dispatch
+
+            > 建议：在mapStateToProps函数中定共享的state数据，在mapDispatchToProps中定义修改state的方法
+    
