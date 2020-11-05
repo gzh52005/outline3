@@ -1,11 +1,14 @@
 import React from 'react';
-
+import {bindActionCreators} from 'redux'
 import { HashRouter, BrowserRouter, Route, Redirect, Switch, Link, NavLink, withRouter } from 'react-router-dom';
 
 import { Menu,Row,Col,Button } from 'antd';
 import {connect} from 'react-redux'
 import {withRedux} from '@/utils/hoc'
 // import store from '@/store'
+
+import {add} from './store/actions/cart'
+import userAction from './store/actions/user'
 
 // 引入页面组件
 import Home from './views/Home'
@@ -22,15 +25,19 @@ import './App.scss';
 
 const mapStateToProps = function(state){
     return {
-        isLogin:!!state.Authorization
+        isLogin:!!state.user.Authorization
     }
 }
 const mapDispatchToProps = function(dispatch){
-    return {
-        logout(){
-            dispatch({type:'logout'})
-        }
-    }
+    // return {
+    //     logout(){
+    //         dispatch(userAction.logout())
+    //     },
+    //     login(user){
+    //         dispatch(userAction.login(user))
+    //     }
+    // }
+    return bindActionCreators(userAction,dispatch) // 返回一个对象：{login(){}}
 }
 @connect(mapStateToProps,mapDispatchToProps)
 @withRouter

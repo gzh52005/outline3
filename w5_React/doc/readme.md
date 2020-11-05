@@ -845,7 +845,7 @@
     * store     仓库（存放数据的容器）
         > 通过`createStore()`创建，store中包含以下常用方法
         * getState()    获取state最新状态 
-        * dispatch()    修改state的唯一方式
+        * dispatch(action)    修改state的唯一方式
         * subscribe()   监听state修改
     * state     状态（数据）
         > 需要定义初始值，初始值可以在createStore的第二个参数定义，也可以在reducer中定义（推荐）
@@ -877,3 +877,119 @@
 
             > 建议：在mapStateToProps函数中定共享的state数据，在mapDispatchToProps中定义修改state的方法
     
+
+## day6-4
+
+### 面试题
+* Vue路由模式改为history需要做哪些操作
+    1. 实例化路由时配置mode属性：`mode:'history'`
+    2. 服务器配置
+        > 除静态资源外的任何访问地址都响应index.html的内容
+* 如何Vue页面数据闪现问题
+    ```js
+        <h1>{{title}}</h1>
+        <style>
+            [v-cloak]{opacity:0}
+            // 骨架屏
+        </style>
+    ```
+### 复习
+* redux
+    * 使用步骤
+        1. 安装引用
+        2. 创建仓库：store
+        ```js
+            import {createStore} from 'redux'
+            const store = createStore(reducer)
+            export default store;
+        ```
+        3. 使用
+            * 获取
+            * 修改
+            * 监听
+    * 核心
+        * store     仓库
+            * 常用方法
+                * getState()        获取最新状态
+                * dispatch(action)  唯一修改state的方法
+                * subscribe(fn)
+        * reducer   修改数据的方法
+            > 是一个纯函数
+            * 不修改传入的参数state,action
+            * 返回一个新的state
+        * state
+            > 需要设置初始state（一般在reudcer中设置）
+        * action    命令
+            > dispatch(action)
+    * redux工作流程
+
+* react-redux
+    * Provider组件利用Context技术共享数据
+    * connect高阶组件接收数据
+        * mapStateToProps       用于定义传入的state数据
+        * mapDispatchToProps    用于定义修改state的方法
+
+### 知识点
+* 简化版redux
+* redux模块
+    > reducer模块化，模块化后只影响state的读取方式：`state.xxx -> state.[module].xx`
+    ```js
+    // vue
+    const store = new Vuex.Store({
+        state:{
+            a:10
+        },
+        getters:{},
+        mutations:{},
+        actions:{},
+
+        // 模块化Vuex
+        modules:{
+            // user.js
+            user:{
+                state:{
+                    b:20
+                },
+                getters:{},
+                mutations:{},
+                actions:{}
+            },
+
+            // cart.js
+            cart:{
+                state:{},
+                getters:{},
+                mutations:{},
+                actions:{}
+            }
+        }
+    }) 
+    // this.$store.state.a;
+    // this.$store.state.user.b
+    ```
+* action creator    action构造器（一个用户创建action的函数）
+    * bindActionCreators
+    ```js
+        //bindActionCreators(userAction,dispatch) {login,logout}
+        function bindActionCreators(actionCreator,dispatch){
+            // actionCreator={login,logout}
+            const result = {}
+
+            for(let key in actionCreator){
+                result[key] = function(){
+                    // dispatch(actionCreator[key](...arguments)); //(a,b,c)
+                    dispatch(actionCreator[key].apply(null,arguments))
+                }
+            }
+
+            return result
+        }
+    ```
+
+* Redux设计和使用的三项基本原则
+    * 唯一数据源：store是必须是唯一的
+        > 一个应用只能有一个store
+    * 只有store能改变自己的内容
+        > 只能store提供的方法(dispatch)才能修改state
+    * Reducer必须是一个纯函数
+        > 在reducer中不修改传入的参数，并返回一个新的state
