@@ -993,3 +993,119 @@
         > 只能store提供的方法(dispatch)才能修改state
     * Reducer必须是一个纯函数
         > 在reducer中不修改传入的参数，并返回一个新的state
+* 调试工具
+    * react调式工具：React Developer Tools
+    * redux调试工具：Redux DevTools
+
+
+## day6-5
+
+### 面试题
+* JSX的原理
+```js
+    const button = <button>按钮</button>
+    // const button = React.createElement('button',null,'按钮')
+    <div>
+        
+    </div>
+
+    $('input').attr('type');//获取值
+    $('input').attr('type','password');//设置值
+    const a = {name:"a",list:{a1:1,a2:2}}
+    $.extend(a,{id:1,value:'abc'})
+    const newObj = $.extend(true,{},a)
+    newObj.list.a1 = 10;
+```
+* Vue组件如何控制传入数据的类型
+```js
+    // goodslist:[]
+    <datalist :datalist="goodslist"></datalist>
+    <datalist></datalist>
+
+    Vue.component('datalist',{
+        props:{
+            // datalist:Array
+            datalist:{
+                type:Array,
+                default:[]
+            }
+        },
+        data(){
+            return {}
+        },
+        template:`<div><ul><li v-for="item in datalist"></li></ul><slot/></div>`
+    })
+```
+
+### 复习
+* 简易版redux
+* redux模块化
+* actionCreator 
+    > action构造器：一个用于创建action的函数
+    * bindActionCreators
+
+### 知识点
+* React组件中控制传入的数据类型
+    1. 安装并引入`prop-types`模块
+    2. 给组件设置`propTypes`静态属性
+* React组件中控制传入的数据的默认值
+    * 设置静态属性：defaultProps
+```js
+    // 16-: import {PropTypes} from 'react'
+    // v16版本后类型校验剥离到一个单独的prop-types模块中
+    import PropTypes from "prop-types";
+    function Datalist(props){
+        return <div>{props.children}</div>
+    }
+
+    // props数据类型校验
+    Datalist.propTypes = {
+        // 类型为数组，且必填属性
+        datalist:PropTypes.array.isRequired,
+        index:PropTypes.oneOfType([PropTypes.number,PropType.string])
+    }
+    // props默认值
+    Datalist.defaultProps = {
+        datalist:[],
+        index:0
+    }
+
+    class Datalist extends React.Component{
+        // 注意: ES6仅支持静态方法，不支持静态属性
+        // Datalist.propTypes
+        static propTypes = {
+            datalist:PropTypes.array.isRequired,
+            index:PropTypes.oneOfType([PropTypes.number,PropType.string])
+        }
+        static defaultProps = {
+            datalist:[],
+            index:0
+        }
+
+        // Datalist.getData(); jQuery.ajax(),jQuery.extend()
+        static getData(){
+
+        }
+        render(){
+            return <div>{this.props.children}</div>
+        }
+    }
+
+
+    <Datalist datalist={[]} index={10}>
+    </Datalist>
+
+```
+
+* redux中间件
+    > 中间件为一个函数
+    * 副作用effect（一些不可控的操作）
+
+    * redux-saga
+        * Generator 生成器函数
+        * Iterator  迭代器
+        * 使用步骤
+            1. 安装并引入
+            2. 创建saga中间件
+    * 单元测时
+        > 编写测试用例来验证自己写的代码有没有问题

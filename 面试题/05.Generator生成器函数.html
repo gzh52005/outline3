@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05.Generator生成器函数</title>
+</head>
+<body>
+    <h1>05.Generator生成器函数</h1>
+    <script>
+        /**
+            * 生成器函数：Genderator
+                * 执行生成器函数不会执行函数中的代码
+                * 返回一个迭代器
+                * return   结束迭代并返回值
+                * yield    暂停迭代并返回值
+            * 迭代器：Iterator
+                * next()：执行一次next就是一次迭代，返回一个对象，格式为：{value,done}
+                    * value: 迭代到当前位置时的值
+                    * done：迭代器是否完成迭代
+                * for..of   能遍历具有迭代特性的数据，for..of会不断调用迭代器的next方法，直到迭代完成
+                    * String
+                    * Array
+                    * NodeList
+                    * Map/Set
+         */
+        function show1(){
+            console.log('show1')
+        }
+        show1();// undefined
+
+        function show2(){
+            console.log('show2')
+            return 100;
+        }
+        show2();// 100
+
+        function show3(){
+            console.log('show3')
+            return 100;
+        }
+        new show3();// Object
+
+        async function show4(){
+            console.log('show4')
+            return 100;
+        }
+        show4();// Promise
+
+        function* show5(){
+            console.log('show5')
+            return 100;
+        }
+        const It = show5();// 不会执行函数中的代码，而是返回一个Iterator迭代器
+
+        // 结论：生成器函数，返回一个迭代器
+        function* create(){
+            console.log('start');
+            yield 'laoxie';
+            console.log(1);
+            yield 'jingjing';
+            console.log(2);
+            yield 'xiaoxie';
+            console.log(3);
+            yield 100;
+            console.log('end')
+        }
+
+        const myIt = create(); // 迭代器
+
+        // for(let val of myIt){
+        //     console.log('val',val);
+        // }
+        
+        
+    </script>
+</body>
+</html>
