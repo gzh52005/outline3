@@ -788,9 +788,6 @@
     * fetch（原生js）
     * jquery
     * axios
-* 专业术语
-    * 二次封装
-    * hard code
 * fetch的封装
 
 * 路由传参
@@ -1109,3 +1106,26 @@
             2. 创建saga中间件
     * 单元测时
         > 编写测试用例来验证自己写的代码有没有问题
+
+
+## day7-1
+
+### 知识点
+* create-react-app  脚手架
+    * 自定义webpack配置
+        * 在react-scripts工具中修改（容易在更新时被覆盖，不推荐）
+        * npm run eject （不可逆操作，不推荐）
+        * react-app-rewired
+            > 创建一个config-overrides.js文件来对 webpack 配置进行扩展，需要修改npm script
+            * 1.x版本
+            * 2.x版本
+                * customize-cra
+* Hook
+    * useState
+        > 返回一个数组：`[状态,修改状态的方法]`，执行修改方法会触发函数组件的刷新
+    * useEffect
+        > effect 中的代码将在每轮渲染结束后执行
+    * useMemo
+        > 一般用于性能优化，依赖的数据没有修改时返回缓存数据（上一次运算的数据）
+    * useCallback
+        > 

@@ -38,7 +38,11 @@ module.exports = {
                         presets:['@babel/preset-react'],
                         plugins:[
                             ['@babel/plugin-proposal-decorators',{legacy: true}],
-                            '@babel/plugin-proposal-class-properties'
+                            '@babel/plugin-proposal-class-properties',
+
+                            // antd按需加载
+                            // ["import", { libraryName: "antd", style: "css" },'antd'],
+                            // ["import", { libraryName: "antd-mobile", style: "css" },'antdm'],
                         ]
                     }
                 }]
