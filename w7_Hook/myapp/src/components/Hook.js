@@ -4,6 +4,8 @@ import UseState from './UseState'
 import UseEffect from './UseEffect'
 import UseMemo from './UseMemo'
 import UseCallback from './UseCallback'
+import UseContext from './UseContext'
+import UseReducer from './UseReducer'
 
 function Hook(){
     const [showEffect,change] = useState(true)
@@ -19,8 +21,10 @@ function Hook(){
                 '隐藏'
             }
             </div>
-            <UseMemo/> */}
+            <UseMemo/>
             <UseCallback/>
+            <UseContext/> */}
+            <UseReducer/>
         </div>
     )
 }

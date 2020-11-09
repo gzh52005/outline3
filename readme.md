@@ -250,7 +250,8 @@
 
                         TodoFrom.contextType = Context;
                     ```
-                * 只适用于函数组件的方式
+                * 只适用于函数组件的方式: useContext
+                
 
 * 从0搭建基于webpack的React环境
     * 创建目录
@@ -1128,4 +1129,4 @@
     * useMemo
         > 一般用于性能优化，依赖的数据没有修改时返回缓存数据（上一次运算的数据）
     * useCallback
-        > 
+        > 返回传入的函数

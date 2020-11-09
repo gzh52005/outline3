@@ -158,18 +158,18 @@ Effect Hook 可以让我们在函数组件中执行一些副作用操作，如 a
 
 1. useContext
   > 简化context获取方式
-  ```js
-  // 父组件
-  const MyContext = React.createContext(null);
-  <MyContext.Provider value={{ username: "laoxie", age: 18 }}>
-    <MyComponent />
-  </MyContext.Provider>;
 
-  // 子组件
-  function MyCompnent() {
-    const user = useContext(MyContext); // laoxie
-    return <div>{user.username}</div>;
-  }
+  ```js
+    // 父组件
+    const MyContext = React.createContext(null);
+    <MyContext.Provider value={{ username: "laoxie", age: 18 }}>
+      <MyComponent />
+    </MyContext.Provider>
+    // 子组件
+    function MyCompnent() {
+      const user = useContext(MyContext); // laoxie
+      return <div>{user.username}</div>;
+    }
   ```
 
 `useContext(MyContext)` 相当于 class 组件中的 `static contextType = MyContext` 或者 `<MyContext.Consumer>`
@@ -189,7 +189,7 @@ Effect Hook 可以让我们在函数组件中执行一些副作用操作，如 a
 				return [action.goods, ...state];
 			case 'remove':
 				return state.filter(item => item.name != action.name);
-			case 'change'
+			case 'change':
 				return state.map(item=>{
 					if(item.name === action.name){
 						item.qty = action.qty;
