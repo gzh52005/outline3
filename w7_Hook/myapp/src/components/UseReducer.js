@@ -1,41 +1,26 @@
 import React, { useState, useEffect, useMemo, useCallback, useContext, useReducer } from 'react';
 
-const initState = [
-    { name: "goods1", price: 98, qty: 2 },
-    { name: "goods2", price: 198, qty: 2 },
-    { name: "goods3", price: 998, qty: 1 },
-];
-
-// dispatch({type:'add',goods})
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'add':
-            return [action.goods, ...state];
-        case 'remove':
-            return state.filter(item => item.name != action.name);
-        case 'change':
-            return state.map(item => {
-                if (item.name === action.name) {
-                    item.qty = action.qty;
-                }
-                return item;
-            })
-        case 'clear':
-            return []
-        default:
-            throw new Error('type error');
-    }
-}
+import {context} from '../store'
 
 function UseReducer() {
-    const [qty, changeQty] = useState(1);
-    const [num, changeNum] = useState(10);
 
-    const [goodslist, dispatch] = useReducer(reducer, initState)
+    // const [goodslist, dispatch] = useReducer(reducer, initState)
+    const {state:goodslist,dispatch} = useContext(context)
 
     const remove = useCallback(function(name){
         dispatch({type:'remove',name})
     },[goodslist]);
+    const clear = useCallback(()=>{
+        dispatch({type:'clear'})
+    },[])
+
+    const changeQty = useCallback((name,e)=>{
+        dispatch({type:'change',name,qty:e.currentTarget.value})
+    },[])
+    const add2cart = useCallback(()=>{
+        const goods = {name: "goods10", price: 198, qty: 1 }
+        dispatch({type:'add',goods})
+    },[])
 
     const totalPrice = useMemo(function(){
         return goodslist.reduce((prev,item)=>prev+item.qty*item.price,0)
@@ -49,13 +34,13 @@ function UseReducer() {
                     goodslist.map(item => (
                         <li key={item.name}>
                             <h4>{item.name}</h4>
-                            <p className="price">{item.price} &times; {item.qty}</p>
+                            <p className="price">{item.price} &times; <input type="number" value={item.qty} onChange={changeQty.bind(null,item.name)} /></p>
                             <button onClick={remove.bind(null,item.name)}>删除</button>
                         </li>
                     ))
                 }
             </ul>
-            <div>总价：{totalPrice.toFixed(2)}</div>
+            <div><button onClick={add2cart}>添加</button><button onClick={clear}>清空</button> 总价：{totalPrice.toFixed(2)}</div>
         </div>
     )
 }

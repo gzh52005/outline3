@@ -10,11 +10,13 @@ import './App.css';
 // import 'antd/dist/antd.css'
 
 import Hook from './components/Hook'
+import MyHook from './components/MyHook'
 
 function App() {
   return (
     <div className="App">
       <Hook/>
+      <MyHook/>
     </div>
   );
 }

@@ -1117,11 +1117,12 @@
         * 在react-scripts工具中修改（容易在更新时被覆盖，不推荐）
         * npm run eject （不可逆操作，不推荐）
         * react-app-rewired
-            > 创建一个config-overrides.js文件来对 webpack 配置进行扩展，需要修改npm script
+            > 创建一个`config-overrides.js`文件来对 webpack 配置进行扩展，需要修改npm script
             * 1.x版本
             * 2.x版本
                 * customize-cra
 * Hook
+    > 只能在函数组件中使用，且只能写在函数最外层
     * useState
         > 返回一个数组：`[状态,修改状态的方法]`，执行修改方法会触发函数组件的刷新
     * useEffect
@@ -1130,3 +1131,136 @@
         > 一般用于性能优化，依赖的数据没有修改时返回缓存数据（上一次运算的数据）
     * useCallback
         > 返回传入的函数
+
+
+## day7-2
+
+### 面试题
+* 验证码的实现过程
+    * 后端生成验证码，存入session,并返回给前端（图片）
+    * 后端验证
+        * 把前端输入的验证码发送到后端并与存在session中的验证码进行校验、
+    * 难点：
+        * 如何识别两个请求为同一个用户(http请求为无状态请求)：利用session
+            * 第一次请求：获取验证码
+            * 第二次请求：发送验证码
+* git与github
+    * git是一个软件，是一个版本管理工具
+    * github是一个代码托管网站
+        * master    ->     main
+
+### 复习
+* Hook
+    > 只能在函数组件或其他hook中使用，且只能写在函数最外层
+    * useState
+    * useEffect
+        > useEffect在渲染完成后执行
+        * 无依赖：初始化和更新时都执行
+        * 空依赖：初始化时执行
+        * 有依赖：初始化和依赖修改时执行
+        * 返回函数：返回的函数在组件被销毁时执行
+    * useMemo
+        > 用于执行一些比较耗费性能的操作
+        * 无依赖：初始化和更新时都执行（不推荐）
+        * 空依赖：初始化时执行
+        * 有依赖：初始化和依赖修改时执行
+    * useCallback
+        > 返回传入的函数，一般用于事件处理函数和父子通讯时传入的函数
+        * 无依赖：初始化和更新时都执行（不推荐）
+        * 空依赖：初始化时执行
+        * 有依赖：初始化和依赖修改时执行
+    * useContext
+        > 简化接收context共享的数据
+    * useReducer
+        > 简单版redux
+
+### 知识点
+* 利用useReducer+useContext实现简单版redux
+    > 练习要求，在不看代码的情况下自己写出来
+    * 唯一数据源：只能使用一次useReducer
+
+* 不常用Hook
+    * useRef    
+    ```js
+        // this.el 得到节点（适用于类组件）
+        <button ref={el=>this.el=el}></button>
+        
+        // myRef.current 得到节点（函数组件+类组件）
+        const myRef = React.createRef()
+        <button ref={myRef}></button>
+
+        // useRef（适用于函数组件）
+        const myRef = useRef(null)
+        <button ref={myRef}></button>
+    ```
+    * useLayoutEffect
+        > useEffect的同步版本
+
+        ```js
+            function UseEffectSync(){
+                useLayoutEffect(function(){
+                    // 这里的代码在渲染前执行
+                })
+                useEffect(function(){
+                    // 这里的代码在组件渲染后执行
+                })
+                return <div></div>
+            }
+
+        ```
+* 第三方Hook
+    * react-router
+        ```js
+            import {useHistory} form 'react-router-dom'
+            function Home(props){
+                // props.history
+                const history = useHistory();
+
+                //props.match.params
+                const params = useParams()
+            }
+            Home = withRouter(Home)
+        ```
+    * react-redux
+        ```js
+            // state = {user:{},cart:{},common:{}}
+            import {useStore,useDispatch,useSelector} from 'react-redux'
+            function Cart(){
+                const store = useStore()
+                const dispatch = useDispatch()
+                const user = useSelector('user')
+                return <div></div>
+            }
+
+            // connect(mapStateToProps,mapDispatchToProps)(Cart)
+
+        ```
+    * antd
+        * useForm
+
+* 自定义Hook
+    > 自定义 Hook 是一个**函数**，其名称以 `use` 开头，利用`useState/useReducer`实现组件刷新
+
+    ```js
+        // 获取/设置WebStorage中的数据
+        function useStorage(key){
+            let data = localStorage.getItem(key);// null,string,json
+            try{
+                data = JSON.parse(data) || {};
+            }catch(err){
+                data = {}
+            }
+            function setStorage(newData){
+                if(typeof newData === 'object'){
+                    newData = JSON.stringify(newData)
+                }
+                localStorage.setItem(newData)
+            }
+            return [data,setStorage];
+        }
+
+        function Login(){
+            const [currentUser,setStorage] = useStorage('currentUser')
+        }
+
+    ```
