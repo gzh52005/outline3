@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+  <h1>{{pageTitle}}</h1>
+  <swiper class="lbt" indicator-dots current="{{currentIndex}}">
+    <swiper-item wx:for="{{recommend}}" wx:key="id">{{index}} - {{item.text}}</swiper-item>
+  </swiper>
+  <navigator url="/pages/mine/mine" open-type="reLaunch">我的</navigator>
+  <navigator url="/pages/list/list" open-type="reLaunch">列表</navigator>
+  <button bindtap="goto">我的</button>
+  <input value="{{pageTitle}}" bindinput="changeTitle" />
+  <input model:value="{{pageTitle}}" />
+</view>

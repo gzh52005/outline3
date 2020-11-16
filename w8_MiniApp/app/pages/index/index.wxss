@@ -1,0 +1,6 @@
+.lbt swiper-item{
+  background:#ccc;
+  height:200rpx;line-height:200rpx;
+  text-align:center;
+}
+h1{display: block;color:#f00;}

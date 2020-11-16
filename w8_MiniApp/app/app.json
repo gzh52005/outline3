@@ -1,0 +1,41 @@
+{
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/logs/logs",
+    "pages/index/index",
+    "pages/list/list",
+    "pages/mine/mine"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#58bc58",
+    "navigationBarTitleText": "H5班级管理系统",
+    "navigationBarTextStyle": "white",
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#f90"
+  },
+  "tabBar": {
+    "selectedColor": "#ff00cc",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "img/home.png",
+        "selectedIconPath": "img/home_active.png"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "日志",
+        "iconPath": "img/list.png",
+        "selectedIconPath": "img/list_active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "img/mine.png",
+        "selectedIconPath": "img/mine_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

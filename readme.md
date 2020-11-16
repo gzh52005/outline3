@@ -1264,3 +1264,81 @@
         }
 
     ```
+
+
+## day8-1
+
+### 面试题
+* ES6（ECMAScript2015）新特性
+    * ES3
+    * ES5   2009
+    * ES6   2015
+        * let,const
+        * 字符串模板
+        * 解构
+        * 箭头函数
+        * ...
+        * 对象简写
+        * **Promise**
+        * **class**
+        * **ESModule**
+        * **Proxy**
+        * Set/Map
+        * Generator
+        * Iterator
+        * Symbol
+        ```js
+            const age = 20;
+            const obj = {
+                username:'jj',
+                password:1234,
+                age,
+                say(){
+
+                }
+            }
+        ```
+    * ES7   2016
+        * 装饰器
+    * ES8
+        * async&await
+    * ES9
+    * ES10
+* 伪元素与伪类
+    * 伪元素： `::`
+        * before
+        * after
+        * first-letter
+        * first-line
+        * root
+    * 伪类： `:`
+
+### 知识点
+
+* 微信小程序文件结构
+    * 文件类型（按文件类型）
+        * .json 配置文件                    
+        * .js 逻辑文件                      js
+        * .wxss 样式文件                    css
+        * .wxml 布局文件                    html
+        * .wxs 模块化脚本文件
+    * 按作用域
+        * 全局文件
+        * 页面文件
+* tabBar页面与非tabBar页面
+    * tabBar页面：设置在app.json中tabbar选项中的页面
+* 页面跳转
+    * 组件：navigator
+    * 接口：
+        * wx.navigate()
+* wxml语法
+    * 数据绑定
+        * 单向
+        * 双向
+    * 事件绑定
+        > bind:xxx
+    * 列表循环
+        * wx:for
+        * wx:key
+        * wx:for-item="it"
+        * wx:for-index="idx"
