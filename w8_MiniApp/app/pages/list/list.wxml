@@ -11,7 +11,7 @@
   </picker>
   
 	<view class="list">
-		<view class="list-item" wx:for="{{classList}}" wx:key="_id">
+		<view class="list-item" wx:for="{{classList}}" wx:key="_id" catchtap="gotoDetail" data-id="{{item._id}}" data-name="{{item.name}}">
 			<text>{{index+1}}</text> {{item.city}}-{{item.category}}-{{item.name}}</view>
 	</view>
   <view wx:if="{{classList.length>=total}}">-------wo shi you di xian de------</view>

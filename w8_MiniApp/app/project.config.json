@@ -78,6 +78,13 @@
 					"pathName": "pages/list/list",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "detail",
+					"pathName": "pages/detail/detail",
+					"query": "id=5f6afe8ea981d4c9a74e17db",
+					"scene": null
 				}
 			]
 		}

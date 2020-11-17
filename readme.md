@@ -1416,8 +1416,10 @@
     * hidden            v-show
 * 事件绑定
     * event
-        * detail
+        * detail:
     * 传参
+        * 自定义属性：data-*
+            > 通过`dataset`获取所有自定义属性的集合
     ```js
         // vue
         <button @click="handle(xx)"></button>
@@ -1425,3 +1427,14 @@
         // react
         <button onClick={handle.bind(null,xxx)}></button>
     ```
+* ajax二次封装
+    > wx.request进行封装
+* 路由传参与接收
+    * 传参：利用url参数的方式进行传参
+    * 接收：目标页面在`onLoad`的`options`参数获取传入的值
+* 在小程序中使用npm模块
+    > 微信小程序中不能直接使用npm模块，必须经过重新编译才能使用，编译方式如下
+    1. 创建package.json
+    2. 安装npm模块
+    3. 编译：菜单 -> 工具 -> 构建npm
+        > 构建后项目会生成一个`miniprogram_npm`的目录

@@ -1,9 +1,10 @@
 {
   "entryPagePath": "pages/index/index",
   "pages": [
-    "pages/logs/logs",
     "pages/index/index",
+    "pages/logs/logs",
     "pages/list/list",
+    "pages/detail/detail",
     "pages/mine/mine"
   ],
   "window": {
@@ -19,20 +20,20 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath": "img/home.png",
-        "selectedIconPath": "img/home_active.png"
+        "iconPath": "assets/img/home.png",
+        "selectedIconPath": "assets/img/home_active.png"
       },
       {
         "pagePath": "pages/list/list",
         "text": "班级列表",
-        "iconPath": "img/list.png",
-        "selectedIconPath": "img/list_active.png"
+        "iconPath": "assets/img/list.png",
+        "selectedIconPath": "assets/img/list_active.png"
       },
       {
         "pagePath": "pages/mine/mine",
         "text": "我的",
-        "iconPath": "img/mine.png",
-        "selectedIconPath": "img/mine_active.png"
+        "iconPath": "assets/img/mine.png",
+        "selectedIconPath": "assets/img/mine_active.png"
       }
     ]
   },

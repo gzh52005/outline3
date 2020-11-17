@@ -1,0 +1,7 @@
+<view class="container">
+  <view class="title">{{classInfo.city}}-{{classInfo.category}}-{{classInfo.name}}</view>
+  <view class="info">班级总人数：{{total}}</view>
+  <view class="student">
+    <text wx:for="{{student}}" wx:key="_id">{{item.username}}</text>
+  </view>
+</view>

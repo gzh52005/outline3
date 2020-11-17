@@ -37,11 +37,13 @@ Page({
     //   }
     // });
     const currentCity = 'GZ';
-    const currentCategory = 'html5';
-    const {data:classList} = await app.request('/class',{
-      city:currentCity,
-      category:currentCategory.toUpperCase()
-    });
+    const currentCategory = 'HTML5';
+    // const {data:classList} = await app.request('/class',{
+    //   city:currentCity,
+    //   category:currentCategory.toUpperCase()
+    // });
+    
+
     const {data:cityList} = await app.request('/city');
     const {data:categoryList} = await app.request('/category');
 
@@ -58,12 +60,12 @@ Page({
     });
 
     this.setData({
-      classList:classList.result,
       cityList:cityList.result,
       categoryList:categoryList.result,
       categoryIndex,
-      cityIndex,
-      total:classList.total,
+      cityIndex
+    },()=>{
+      this.getClassList();
     });
 
 
@@ -147,15 +149,16 @@ Page({
       page:newPage
     },async ()=>{
 
-      const {data:{result}} = await app.request('/class',{
-        city,
-        category,
-        page:newPage
-      })
+      // const {data:{result}} = await app.request('/class',{
+      //   city,
+      //   category,
+      //   page:newPage
+      // })
 
-      this.setData({
-        classList:[...classList,...result]
-      })
+      // this.setData({
+      //   classList:[...classList,...result]
+      // })
+      this.getClassList()
     })
 
   },
@@ -173,31 +176,51 @@ Page({
       cityIndex
     },()=>{
       // cityIndex修改后执行这里的代码
+      this.getClassList(true)
     })
 
     // 根据索引获取城市名
-    const cityCode = this.data.cityList[cityIndex].code;
-    const {data:classList} = await app.request('/class',{
-      city:cityCode
-    });
-    this.setData({
-      classList:classList.result
-    })
+    // const cityCode = this.data.cityList[cityIndex].code;
+    // const {data:classList} = await app.request('/class',{
+    //   city:cityCode
+    // });
+    // this.setData({
+    //   classList:classList.result
+    // })
   },
   async changeCategory(e){
     const categoryIndex = e.detail.value;
 
     this.setData({
       categoryIndex
+    },()=>{
+      this.getClassList(true)
     })
 
-    // 根据索引获取学科名
-    const category = this.data.categoryList[categoryIndex].name;
-    const {data:classList} = await app.request('/class',{
-      category
+   
+  },
+  async getClassList(init){
+    const {classList,page,categoryList,categoryIndex,cityList,cityIndex} = this.data;
+    const category = categoryList[categoryIndex].name;
+    const city = cityList[cityIndex].code;
+    const newPage = init ? 1 : page
+    const {data:{result,total}} = await app.request('/class',{
+      page:newPage,
+      category,
+      city
     });
+
     this.setData({
-      classList:classList.result
+      classList:init ? result : [...classList,...result],
+      total,
+      page:newPage
+    })
+  },
+  // 跳转到班级详情
+  gotoDetail(e){
+    const {id} = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/pages/detail/detail?id='+id,
     })
   }
 })
