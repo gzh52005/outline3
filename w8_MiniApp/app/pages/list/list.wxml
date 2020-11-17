@@ -1,2 +1,19 @@
-<!--pages/list/list.wxml-->
-<text>pages/list/list.wxml</text>
+<view class="container">
+  <picker bindchange="changeCity" value="{{cityIndex}}" range="{{cityList}}" range-key="name">
+    <view class="picker">
+      分校：{{cityList[cityIndex].name}}
+    </view>
+  </picker>
+  <picker bindchange="changeCategory" value="{{categoryIndex}}" range="{{categoryList}}" range-key="name">
+    <view class="picker">
+      学科：{{categoryList[categoryIndex].name}}
+    </view>
+  </picker>
+  
+	<view class="list">
+		<view class="list-item" wx:for="{{classList}}" wx:key="_id">
+			<text>{{index+1}}</text> {{item.city}}-{{item.category}}-{{item.name}}</view>
+	</view>
+  <view wx:if="{{classList.length>=total}}">-------wo shi you di xian de------</view>
+  <view wx:else>loading....</view>
+</view>

@@ -23,8 +23,8 @@
         "selectedIconPath": "img/home_active.png"
       },
       {
-        "pagePath": "pages/logs/logs",
-        "text": "日志",
+        "pagePath": "pages/list/list",
+        "text": "班级列表",
         "iconPath": "img/list.png",
         "selectedIconPath": "img/list_active.png"
       },

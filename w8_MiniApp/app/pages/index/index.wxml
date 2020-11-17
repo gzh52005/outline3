@@ -9,4 +9,9 @@
   <button bindtap="goto">我的</button>
   <input value="{{pageTitle}}" bindinput="changeTitle" />
   <input model:value="{{pageTitle}}" />
+
+  <view wx:if="{{view == 'WEBVIEW'}}"> WEBVIEW </view>
+  <view wx:elif="{{view == 'APP'}}"> APP </view>
+  <view wx:else> MINA </view>
+  <view hidden="{{view==='APP'}}">hidden</view>
 </view>

@@ -1,1 +1,7 @@
-/* pages/list/list.wxss */
+.list{
+  padding:20rpx;
+}
+.list-item{
+  padding-bottom:30rpx;margin-bottom: 30rpx;border-bottom:1px dotted #ccc;
+}
+.list-item text{padding:0 20rpx;color:#999}

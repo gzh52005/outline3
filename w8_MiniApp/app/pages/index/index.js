@@ -7,7 +7,8 @@ Page({
   data: {
     currentIndex:1,
     recommend:[{id:1000,text:'1000',imgurl:'xxx'},{id:2000,text:'2000',imgurl:'xxx'},{id:3000,text:'3000',imgurl:'xxx'}],
-    pageTitle:'首页'
+    pageTitle:'首页',
+    view:'APP'
   },
   //事件处理函数
   bindViewTap: function() {

@@ -1333,8 +1333,8 @@
         * wx.navigate()
 * wxml语法
     * 数据绑定
-        * 单向
-        * 双向
+        * 单向: {{}}
+        * 双向: model:value=""
     * 事件绑定
         > bind:xxx
     * 列表循环
@@ -1342,3 +1342,86 @@
         * wx:key
         * wx:for-item="it"
         * wx:for-index="idx"
+
+## day8-2
+
+### 复习
+* 应用：app.js
+    > App(options)
+* 页面: [page].js
+    > Page(options)
+    * options
+        * data
+            * 获取：
+                * wxml: 直接写在双花括号`{{xxx}}`中
+                * js：this.data.xxx
+            * 修改：this.setData(newData,callback)
+            ```js
+                data:{
+                    goodslist:[{name:'goods1',price:123},{name:'goods2',price:213}]
+                }
+
+                // react
+                this.setState({
+                    goodslist:[]
+                })
+
+                this.setData({
+                    'goodslist[1].price':312
+                })
+            ```
+* wxml语法
+    * 数据绑定
+    * 事件绑定
+        * 格式
+            * bind:事件类型="事件处理函数"
+            * catch:事件类型 ="事件处理函数"           阻止事件向上冒泡
+            * capture-bind:事件类型="事件处理函数"     在捕获阶段执行事件处理函数
+            * capture-catch:事件类型="事件处理函数"     在捕获阶段执行事件处理函数并阻止事件向下传播
+        * 事件类型
+            * touch
+                * touchstart
+                * touchend
+                * touchmove
+                * touchcancel
+            * 手势
+                * tap: 点击
+                    > 对touch事件的封装
+                * longtap：长按（不推荐）
+                * longpress：长按
+    * 列表循环
+        * wx:for
+            > item和key获取的是当前循环的值
+            * item
+            * index
+        * wx:key
+            * 在小程序中key的值为**属性名**，而不是属性值
+            * `*this` 代表item本身
+        * wx:for-item
+        * wx:for-index
+        ```JS
+            // goodslist=[{id:1,name:'goods1',price:[120,140,180]},{}]
+            <view wx:for="{{goodslist}}" wx:key="id">
+                {{item.name}}
+                <view wx:for="{{item.price}}" wx:for-item="price" wx:key="*this">
+                    {{item.name}}: {{price}}
+                </view>
+            </view>
+        ```
+### 知识点
+* 条件渲染
+    * wx:if             v-if
+    * wx:else
+    * wx:elif
+    * hidden            v-show
+* 事件绑定
+    * event
+        * detail
+    * 传参
+    ```js
+        // vue
+        <button @click="handle(xx)"></button>
+
+        // react
+        <button onClick={handle.bind(null,xxx)}></button>
+    ```
