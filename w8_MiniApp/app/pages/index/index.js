@@ -18,6 +18,10 @@ Page({
 
     // player.play()
   },
+  onShow(){
+    const tabBar = this.getTabBar();
+    tabBar.setCurrent(0)
+  },
   
   goto(){
     console.log('goto')

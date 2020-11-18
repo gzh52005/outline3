@@ -1,0 +1,11 @@
+<!-- <view class="tabbar">
+	<view class="tabbar-item {{current===index ? 'current' : ''}}" wx:for="{{list}}" bindtap="goto" data-index="{{index}}" data-url="{{item.pagePath}}">
+		<image src="{{current===index ? item.selectedIconPath : item.iconPath}}"></image>
+		<text>
+		{{item.text}}
+		</text>
+	</view>
+</view> -->
+<view class="tabbar2">
+<tabbar list="{{list}}" current="{{current}}" bindchange="changeTab"/>
+</view>

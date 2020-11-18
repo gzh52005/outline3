@@ -1,14 +1,4 @@
 <view>
   <view><text>我的</text></view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
-  <view class="item">test</view>
+  <list source="{{['laoxie','jingjing','xiaoxie']}}"/>
 </view>

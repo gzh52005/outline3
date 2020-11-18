@@ -1441,10 +1441,65 @@
 
 ## day8-3
 
+### 面试题
+* Vue如何监听数据的改变
+    * 属性必须响应式属性，如何把属性变成响应式属性
+        * 初始化时定义
+        * Vue.set(target,proName,value)/this.$set()
+            * target能是实例和data
+            ```js
+                const vm = new Vue({
+                    data:{
+                        a:100,
+                        score:{
+                            en:100,
+                            math:80,
+                            //chinese:120
+                        }
+                    }
+                })
+
+                vm.a = 200;
+                vm.b = 10;// 不是响应式属性
+                //Vue.set(vm.$data,'c',20);//
+                vm.set(vm.score,'chinese',120)
+
+                vm.$watch('a',function(newVal,oldVal){
+
+                })
+            ```
+    * 监听路由变化
+        ```js
+            {
+                data:{
+                    a:100
+                },
+                watch:{
+                    // 能监听实例下的所有属性
+                    a:function(newVal,oldVal){
+                        
+                    },
+                    '$route.path':function(newVal,oldVal){
+                        // /home->/mine
+                    }
+                },
+                beforeRouteUpdate(to,from,next){
+                    // to: {path:'/mine',...}
+                    // from: {path:'/home',..}
+                    next()
+                }
+            }
+
+            <button @keyup.enter="">
+        ```
+
 ### 知识点
 * 组件
     * 内置组件
-        * 
+        * audio
+        * video
+        * camera
+        * image
 * 授权
     * 第一次：
         * 授权列表没有相关信息，判断方式为:
@@ -1461,3 +1516,27 @@
         ```
     * 用户信息权限`userInfo`
         > 用户信息必须是通过**用户主动点**击才能获取，不能通过`wx.authorize`获取
+* 地图：map
+    * 经纬度：longitude + latitude
+    * 坐标系
+        * wgs84
+        * gcj02 国测局
+        * bd09  百度坐标系（基于gcj02加密后的坐标系）
+* 自定义组件
+    * 定义
+        > 通过Component(options)注册一个组件
+        * 常用配置参数
+            * data          组件数据
+            * properties    父组件传入数据
+            * methods       方法
+            * observers     监听数据修改（类似于Vue中的watch）
+            * 组件生命周期函数：lifetimes
+            * 页面生命周期函数：pageLifetimes
+    * 使用
+        > 在`usingComponents`中定义组件名称和组件路径
+        * 全局组件: 在app.json中配置
+        * 局部组件：在页面配置文件中配置
+* 自定义tabBar
+    > 自定义一个组件来实现tabbar的效果，只有tabBar页面才显示tabBar
+    1. 定义`app.json`的`tabBar.custom`属性为`true`
+    2. 在根目录下创建`custom-tab-bar`组件，且文件名为index

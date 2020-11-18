@@ -1,0 +1,5 @@
+.tabbar{display: flex;padding:20rpx;border-top:1px solid #ddd;background-color:#fff;box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+.tabbar image{display:inline-block;width:50rpx;height:50rpx;}
+.tabbar-item{flex:1;text-align: center;}
+.current{color:#f09;}
+.tabbar2{background-color:#fff;}

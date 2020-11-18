@@ -15,5 +15,5 @@
   <view wx:else> MINA </view>
   <view hidden="{{view==='APP'}}">hidden</view>
 
-  
+  <datalist/>
 </view>

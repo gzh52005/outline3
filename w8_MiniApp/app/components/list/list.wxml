@@ -1,0 +1,6 @@
+<view>
+  <view class="title">列表</view>
+  <view class="list">
+    <view wx:for="{{source}}">{{item}}</view>
+  </view>
+</view>

@@ -27,6 +27,8 @@ Page({
    */
   onShow: function () {
     console.log('mine.onShow')
+    const tabBar = this.getTabBar();
+    tabBar.setCurrent(2)
   },
 
   /**
