@@ -81,9 +81,9 @@
 				},
 				{
 					"id": 2,
-					"name": "detail",
-					"pathName": "pages/detail/detail",
-					"query": "id=5f6afe8ea981d4c9a74e17db",
+					"name": "camera",
+					"pathName": "pages/camera/camera",
+					"query": "",
 					"scene": null
 				}
 			]

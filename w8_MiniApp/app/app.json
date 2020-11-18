@@ -5,6 +5,7 @@
     "pages/logs/logs",
     "pages/list/list",
     "pages/detail/detail",
+    "pages/camera/camera",
     "pages/mine/mine"
   ],
   "window": {

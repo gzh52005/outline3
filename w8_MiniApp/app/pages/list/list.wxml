@@ -9,6 +9,11 @@
       学科：{{categoryList[categoryIndex].name}}
     </view>
   </picker>
+  <picker mode="region">
+    <view class="picker">
+      时间：
+    </view>
+  </picker>
   
 	<view class="list">
 		<view class="list-item" wx:for="{{classList}}" wx:key="_id" catchtap="gotoDetail" data-id="{{item._id}}" data-name="{{item.name}}">

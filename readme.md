@@ -1438,3 +1438,26 @@
     2. 安装npm模块
     3. 编译：菜单 -> 工具 -> 构建npm
         > 构建后项目会生成一个`miniprogram_npm`的目录
+
+## day8-3
+
+### 知识点
+* 组件
+    * 内置组件
+        * 
+* 授权
+    * 第一次：
+        * 授权列表没有相关信息，判断方式为:
+        ```js
+            if(authSetting['scope.camera'] === undefined){
+
+            }
+        ```
+    * 用户拒绝过使用权限，判断方式为
+        ```js
+            if(authSetting['scope.camera'] === false){
+                
+            }
+        ```
+    * 用户信息权限`userInfo`
+        > 用户信息必须是通过**用户主动点**击才能获取，不能通过`wx.authorize`获取
