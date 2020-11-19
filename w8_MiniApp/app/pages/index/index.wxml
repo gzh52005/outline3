@@ -1,5 +1,5 @@
-<!--index.wxml-->
-<view class="container">
+<import src="/template/index.wxml" />
+<view class="container tabbar-page">
   <h1>{{pageTitle}}</h1>
   <swiper class="lbt" indicator-dots current="{{currentIndex}}">
     <swiper-item wx:for="{{recommend}}" wx:key="id">{{index}} - {{item.text}}</swiper-item>
@@ -14,6 +14,26 @@
   <view wx:elif="{{view == 'APP'}}"> APP </view>
   <view wx:else> MINA </view>
   <view hidden="{{view==='APP'}}">hidden</view>
-
+  <view bindtap="{{tools.handleClick}}">转换大小写:{{tools.toUpperCase('laoxie')}}-{{tools.formatDate()}}</view>
   <datalist/>
+  <template is="datalist"></template>
+  <include src="/template/index.wxml" />
 </view>
+<wxs src="../../wxs/tools.wxs" module="mytools"></wxs>
+<wxs module="tools">
+  function handleClick(e,a){
+    console.log(e,a)
+  }
+  function toUpperCase(str){
+    return str.toUpperCase()
+  }
+  function formatDate(){
+    var d = Date.now()
+    return d;
+  }
+  module.exports = {
+    toUpperCase:toUpperCase,
+    handleClick:handleClick,
+    formatDate:formatDate
+  }
+</wxs>

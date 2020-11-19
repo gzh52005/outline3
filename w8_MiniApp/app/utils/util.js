@@ -14,6 +14,14 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-module.exports = {
-  formatTime: formatTime
+function formatDate(date){
+  const d = date ? new Date(date):new Date();
+  return d.toLocaleDateString();
 }
+
+module.exports = {
+  formatTime: formatTime,
+  formatDate
+}
+
+// exports.formatDate = formatDate

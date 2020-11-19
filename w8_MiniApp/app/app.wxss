@@ -4,3 +4,9 @@
 .container {
   padding:20rpx;
 } 
+.tabbar-page{
+  padding-bottom:60px;
+}
+.no-data{
+  color:#999;padding:20rpx;text-align: center;
+}

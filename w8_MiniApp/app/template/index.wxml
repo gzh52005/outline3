@@ -1,0 +1,29 @@
+<template name="datalist">
+	<view class="list" wx:if="{{data}}">
+		<navigator wx:for="{{data}}" wx:key="_id" url="/pages/detail/detail?id={{item._id}}">
+			<view class="list-item">
+				<text>{{index+1}}</text> {{item.city}}-{{item.category}}-{{item.name}}
+      </view>
+		</navigator>
+    <template is="more" data="{{data,total}}"></template>
+	</view>
+  <block wx:else>
+    <view class="no-data">暂无数据显示</view>
+    <view class="no-data">--------------------</view>
+  </block>
+</template>
+
+<template name="more">
+  <view class="no-data">
+    <view wx:if="{{data.length>=total}}">-------wo shi you di xian de------</view>
+    <view wx:else>loading....</view>
+  </view>
+</template>
+<wxs module="tools">
+
+
+</wxs>
+
+<view class="else-content">
+其他内容
+</view>

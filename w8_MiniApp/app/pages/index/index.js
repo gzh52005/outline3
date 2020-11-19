@@ -1,4 +1,8 @@
-//index.js
+import {request} from '../../utils/request'
+const {formatDate} = require('../../utils/util')
+
+console.log('formatDate=',formatDate());
+
 //获取应用实例
 const app = getApp()
 console.log('app=',app);
@@ -11,12 +15,18 @@ Page({
     view:'APP'
   },
   
-  onLoad: function () {
+  onLoad: async function () {
     const player = wx.createInnerAudioContext();
 
     player.src = '/assets/audio/niliuchenghe.mp3';
 
     // player.play()
+
+    // console.log('request=',request);
+    const {data} = await request('/class');
+    console.log('data=',data);
+
+    console.log('upperCase=',this.toUpperCase('laoxie'))
   },
   onShow(){
     const tabBar = this.getTabBar();
@@ -42,5 +52,8 @@ Page({
     this.setData({
       pageTitle:e.detail.value
     })
+  },
+  toUpperCase(str){
+    return str.toUpperCase()
   }
 })

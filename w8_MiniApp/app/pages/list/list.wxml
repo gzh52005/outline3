@@ -1,4 +1,6 @@
-<view class="container">
+<import src="/template/index.wxml" />
+
+<view class="container tabbar-page">
   <picker bindchange="changeCity" value="{{cityIndex}}" range="{{cityList}}" range-key="name">
     <view class="picker">
       分校：{{cityList[cityIndex].name}}
@@ -15,10 +17,11 @@
     </view>
   </picker>
   
-	<view class="list">
+	<!-- <view class="list">
 		<view class="list-item" wx:for="{{classList}}" wx:key="_id" catchtap="gotoDetail" data-id="{{item._id}}" data-name="{{item.name}}">
 			<text>{{index+1}}</text> {{item.city}}-{{item.category}}-{{item.name}}</view>
 	</view>
   <view wx:if="{{classList.length>=total}}">-------wo shi you di xian de------</view>
-  <view wx:else>loading....</view>
+  <view wx:else>loading....</view> -->
+  <template is="datalist" data="{{data:classList,total}}"/>
 </view>
