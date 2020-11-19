@@ -1,0 +1,7 @@
+{"_id":{"$oid":"5c67a0fd9087416d9123e5f6"},"name":"html5","is_current":true}
+{"_id":{"$oid":"5c67a0fd9087416d9123e5f8"},"name":"android","is_current":false}
+{"_id":{"$oid":"5c67a0fd9087416d9123e5fa"},"name":"iOS","is_current":false}
+{"_id":{"$oid":"5c67a0fd9087416d9123e5fc"},"name":"Java","is_current":false}
+{"_id":{"$oid":"5c67a0fd9087416d9123e5fe"},"name":"UI","is_current":false}
+{"_id":{"$oid":"5c67a0fd9087416d9123e600"},"name":"Python","is_current":false}
+{"_id":"e62469b25fb635ca000e31c511798eb3","name":"PHP","is_current":false,"add_time":{"$date":"2020-11-19T09:07:47.993Z"}}

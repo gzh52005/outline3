@@ -1569,6 +1569,45 @@
             * 应用
                 * https协议
                 * git ssh协议
+* jsonp原理
+    > jsonp请求需要服务器支持
+    * 发送**全局函数名**给后端
+    * script标签请求接口返回js代码
+        > js代码格式：全局函数的执行代码
+    ```js
+        // 前端代码
+        function getData(data){
+            console.log(data);
+        }
+
+        <script src="/js/home.js"></script>
+        <script src="/api/list?callback=getData">
+            // 相当于在这里执行了
+            // getData([{},{}])
+        </script>
+
+        $.ajax({
+            type:'jsonp'
+        });
+        // ?callback=jQuery123987421903874120938472103
+
+
+        // 后端代码
+        // /api/list接口
+        router.get('/api/list',(req,res)=>{
+            const {callback} = req.query;
+            // 查询数据库，得到数据
+            const data = [{},{}];
+
+            res.send(`${callback}(${data})`);//res.send(`getData([{},{}])`)
+        })
+    ```
+* react组件优化
+    * shouldComponentUpdate
+    * PureComponent
+    * 优先使用函数组件
+
+
 ### 知识点
 * 模块化
     * js模块化
@@ -1581,3 +1620,73 @@
     * wxml模板
         > 结构复用
 * 微信小程序原生开发
+
+* 云开发
+    * 解决了什么问题？
+        * 解决了服务器的问题
+    * 包含什么东西？
+        * 数据库
+        * 存储空间
+        * 云函数
+            * 定义
+                ```js
+                    // 云函数入口函数
+                    exports.main = (event, context) => {
+                        // 云函数接收参数
+                        const {type} = event;
+                        return data;
+                    }
+                ```
+            * 调用
+                * 小程序端调用
+                    > wx.cloud.callFunctioin({name})
+                * 云函数中调用其他云函数
+                    > cloud.callFunction({name})
+                ```js
+                    wx.cloud.callFunctioin({
+                        name,
+                        // 给云函数传递参数
+                        data:{
+                            type:'insert',// update,add,remove
+                        }
+                    })
+
+                ```
+    * 如何操作？
+        * 在小程序端操作
+            > 通过`wx.cloud`接口进行操作，会有权限问题
+            1. 初始化
+                ```js
+                    wx.cloud.init({
+                        evn:'环境id'
+                    })
+                ```
+            2. 操作
+                * 数据库
+                    * 概念
+                        * database      数据库      database
+                        * collection    集合        table
+                        * document      文档        row
+                    * CRUD
+                        * 批量操作：通过`collection`进行操作
+                        * 单条操作：通过`doc`获取到`document`后进行操作
+                        * 操作符：db.command.xxx
+
+                * 存储文件
+                * 云函数
+        * 在云函数中操作
+            > 存放在云端的函数，相当于后端，操作没有权限问题，通过SDK工具包
+            1. 初始化
+                ```js
+                    const cloud = require('wx-server-sdk');
+
+                    cloud.init({
+                        env:
+                    })
+                ```
+            2. 操作
+                * 数据库
+                * 存储文件
+                * 云函数
+
+
