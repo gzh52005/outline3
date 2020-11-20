@@ -1,0 +1,1 @@
+<view class="tabbar _div"><block wx:for="{{list}}" wx:for-item="item" wx:for-index="__i0__" wx:key="path"><view data-event-opts="{{[['tap',[['goto',['$0'],[[['list','path',item.path,'path']]]]]]]}}" class="tabbar-item _div" bindtap="__e">{{''+item.text+''}}</view></block></view>

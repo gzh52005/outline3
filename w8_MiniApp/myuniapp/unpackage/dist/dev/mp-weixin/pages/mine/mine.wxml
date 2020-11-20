@@ -1,0 +1,1 @@
+<view class="content"><image src="/static/logo.png" class="_img"></image><view class="_h1">{{title}}</view><button data-event-opts="{{[['tap',[['changeTitle',['$event']]]]]}}" bindtap="__e">修改标题</button></view>

@@ -13,8 +13,20 @@ const col = db.collection('city')
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+  // 操作数据库
   // 获取所有城市列表
   const {data} = await col.get();
+
+  // 操作存储文件
+  // cloud.uploadFile()
+
+  // 调用其他云函数
+  // const data = await cloud.callFunction({
+  //   name:'category',
+  //   data:{
+  //     type:'query'
+  //   }
+  // })
 
   return data;
 }

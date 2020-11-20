@@ -1675,7 +1675,7 @@
                 * 存储文件
                 * 云函数
         * 在云函数中操作
-            > 存放在云端的函数，相当于后端，操作没有权限问题，通过SDK工具包
+            > 存放在云端的函数，相当于后端，操作没有权限问题，通过SDK工具包（`wx-server-sdk`）
             1. 初始化
                 ```js
                     const cloud = require('wx-server-sdk');
@@ -1689,4 +1689,138 @@
                 * 存储文件
                 * 云函数
 
+        * 在自己的服务器中操作
+            > 在自己的服务器中通过`Http API`操作云函数，数据库，存储文件
+            ```js
+                // nodeJS代码
+                // config.js
+                module.exports = {
+                    appid:'wx8cf6111b4ab000f2',
+                    secret:'xxx'
+                }
+                // server.js
+                const axios = require('axios');
+                const config = require('./config')
 
+                const {data:{access_token}} = await axios.get('https://api.weixin.qq.com/cgi-bin/token',{
+                    params:{
+                        grant_type:'client_credential',
+                        appid:config.appid,
+                        secret:config.secret
+                    }
+                })
+
+                // 根据access_token调用http api
+                axios.post('https://api.weixin.qq.com/tcb/databasequery?access_token='+access_token,{
+                    env:'qf-52690b',
+                    query:'db.collection("class").where({city:"广州"}).get()'
+                })
+
+            ```
+## day8-5
+
+### 面试题
+* 深拷贝与浅拷贝
+```js
+    let a = 100;
+    let b = a;
+
+    let obj1 = {a:1,b:2,c:{c1:31,c2:32}} ; //obj1='#abc'
+    let obj2 = obj1;  // obj2='#abc'
+
+    // 浅拷贝
+    let obj3 = Object.assigin({},obj1);
+    obj3.c1=310;
+    let obj4 = {...obj1}
+    let obj5 = {}
+    for(let key in obj1){
+        obj5[key] = obj1[key]
+    }
+
+    // 深拷贝
+    // * 递归遍历
+    // * JSON.parse(JSON.stringify())
+    // * 第三方工具
+    //      * jQuery.extend()
+    //      * underscore
+    //      * lodash.cloneDeep
+    let obj6 = jQuery.extend(true,{},obj1)
+
+```
+* 原型链的理解
+    > 实例到Object.prototype间的链条
+    * js是一门基于对象的语言：一切皆对象
+    * 属性访问规则：在原型链中逐层往上查找（找不到返回undefined）
+        > 变量访问规则：在作用域链中逐层往上查找（找不到报错：xxx is not defined）
+    ```js
+        let num = 10;
+        num.toFixed(2);//10.00
+
+        // 以上代码执行时会经历以下步骤
+        // 1. 临时创建一个对象: num = new Number(num)
+        // 2. 通过临时对象调用toFixed方法并得到结果：num.toFixed()
+        // 3. 删除临时对象
+
+        const a = 10;
+        const b = 20
+        function show(a){
+            // var b
+            // var d
+            console.log(a+b);
+
+            let b = 5;
+            var d = 10;
+        }
+
+        show(20);//40,25,NaN
+
+        // 全局作用域
+        var username = 'laoxie';
+        let age = 18;
+    ```
+* 0.1+0.2
+    > 十进制小数转二进制会产生误差
+    * 十进制转二进制
+    * 二进制转十进制
+    * 解决方案：
+        * 把小数部分转成整数在计算，最后除以相应的倍数
+    ```js
+        110 => 0*2^0+1*2^1+1*2^2 ;// 6
+
+        // 整数十转二：除2求余法
+        4 => 100
+        // 小数十转二：乘2取整法
+        0.1 => 0.000110011001
+        // 0.1*2=0.2    =>0
+        // 0.2*2=0.4    =>0
+        // 0.4*2=0.8    =>0
+        // 0.8*2=1.6    =>1
+        // 0.6*2=1.2    =>1
+        // 0.2*2=0.4    =>0
+        // 0.4*2=0.8    =>0
+        // 0.8*2=1.6    =>1
+
+        0.625=>
+        0.625*2 = 1.25  =>1
+        0.25*2 = 0.5    =>0
+        0.5*2  = 1      =>1
+
+        5.017 + 1.2
+    ```
+* ESModule与CommonJS
+    ```js
+        // esmodule 静态引入
+        const url = '../node_modules/axios/index.js'
+        import axios from url; // 报错
+
+        import axios from '../node_modules/axios/index.js';
+        axios.post();
+
+        // commonJS
+        const url = 'axios';
+        const axios = require(url);
+        axios.get();
+
+    ```
+
+## 知识点

@@ -42,6 +42,8 @@ Page({
       name:'test'
     });
 
+    
+
     console.log('cities=',cities)
   },
 
