@@ -1824,3 +1824,30 @@
     ```
 
 ## 知识点
+* 跨平台框架
+    * uni-app
+    * mpvue
+    * wepy  微信官方退出了微信小程序开发框架
+    * taro  
+        * 支持框架
+            * React
+            * Vue
+            * Vue3
+            * Nerv
+        * 路由
+            > 与微信小程序一致: Taro.navigateTo()
+        * taro-ui
+            > 注意版本问题，版本必须跟taro同步
+* mobx
+    > 类似于Vuex、Redux的状态管理工具，一般都会安装`mobx-react`配合使用
+
+    * mobx-react
+        * 组件
+            * Provider
+        * 高阶组件
+            * observer
+            * inject
+* redux
+    * react-redux
+        * Provider
+        * connect()
