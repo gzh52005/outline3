@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>地图</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+            .container{}
+            #mymap {
+                width: 100%;
+                position: fixed;
+                top: 100px;
+                bottom: 0px;
+                text-align: center;
+                background: #FFFFFF;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h4 id="add">map</h4>
+            <div><button id="btnTraffic">交通信息</button></div>
+            <div id="mymap"></div>
+		</div>
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			document.addEventListener('plusready',()=>{
+                var mymap = new plus.maps.Map('mymap');
+                let traffic = false
+
+                // 定位
+                plus.geolocation.getCurrentPosition((pos)=>{
+                    console.log(JSON.stringify(pos))
+                    add.innerText = pos.addresses;
+
+                    const {longitude,latitude} = pos.coords;
+                    var point = new plus.maps.Point( longitude, latitude );
+                    // const styles = {
+                    //     center:point,
+                    //     zoom:20
+                    // }
+                    // var mymap = new plus.maps.Map('mymap',styles);
+                    mymap.centerAndZoom(point,18)
+                    
+                    // 显示用户位置
+                    mymap.showUserLocation(true)
+                    mymap.showZoomControls(true);
+                    mymap.show();
+                    
+                    
+                });
+
+                // 监听用户位置
+                plus.geolocation.watchPosition((pos)=>{
+                    const {longitude,latitude} = pos.coords;
+                    var point = new plus.maps.Point( longitude, latitude );
+                    mymap.centerAndZoom(point,18)
+                });
+                btnTraffic.onclick = function(){
+                    traffic = !traffic;
+                    mymap.setTraffic(traffic);
+                }
+
+
+			})
+		</script>
+	</body>
+</html>

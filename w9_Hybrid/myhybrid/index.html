@@ -14,37 +14,95 @@
 	</style>
 </head>
 <body>
-	<h1>Hybrid真机调试</h1>
-	<button id="btnCamera">摄像头</button>
-	<div id="preview">
-		
+	<div class="contianer">
+		<h1>H5+App演示1</h1>
+		<ul class="mui-table-view list">
+		    <li class="mui-table-view-cell mui-media">
+		        <a class="mui-navigate-right" id="btnCamera">
+		            <div class="mui-media-object mui-pull-left mui-icon mui-icon-camera"></div>
+		            <div class="mui-media-body">
+		                摄像头
+		                <p class='mui-ellipsis'>拍照、录像、扫码、录制小视频等</p>
+		            </div>
+		        </a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" id="btnSpeech">
+		            <span class="mui-media-object mui-pull-left mui-icon mui-icon-mic"></span>
+		            <div class="mui-media-body">
+		                语音助手
+		                <p class='mui-ellipsis'>语音搜索、唤醒、聊天...</p>
+		            </div>
+		        </a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" id="btnPosition">
+		            <span class="mui-media-object mui-pull-left mui-icon mui-icon-map"></span>
+		            <div class="mui-media-body">
+		                位置信息
+		                <p class='mui-ellipsis'>查看当前位置信息</p>
+		            </div>
+		        </a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" id="btnShare">
+		            <span class="mui-media-object mui-pull-left mui-icon mui-icon-pengyouquan"></span>
+		            <div class="mui-media-body">
+		                分享
+		                <p class='mui-ellipsis'>系统、微信、QQ等分享功能</p>
+		            </div>
+		        </a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" id="btnPayment">
+		            <span class="mui-media-object mui-pull-left mui-icon mui-icon-spinner-cycle mui-spin"></span>
+		            <div class="mui-media-body">
+		                支付
+		                <p class='mui-ellipsis'>支付宝、微信支付功能</p>
+		            </div>
+		        </a>
+		    </li>
+			<li class="mui-table-view-cell">
+			    <a class="mui-navigate-right" id="btnContact">
+			        <span class="mui-media-object mui-pull-left mui-icon mui-icon-contact mui-spin"></span>
+			        <div class="mui-media-body">
+			            通讯录
+			            <p class='mui-ellipsis'>通讯录，拨打电话</p>
+			        </div>
+			    </a>
+			</li>
+			<li class="mui-table-view-cell">
+			    <a class="mui-navigate-right" id="btnFingerprint">
+			        <span class="mui-media-object mui-pull-left mui-icon mui-icon-contact mui-spin"></span>
+			        <div class="mui-media-body">
+			            指纹
+			            <p class='mui-ellipsis'>解锁，支付...</p>
+			        </div>
+			    </a>
+			</li>
+		</ul>
 	</div>
 	<script>
 		// DCloud平台下的h5+给我们提供了一个全局对象plus，所有的硬件接口都放在这个对象下面
-		btnCamera.onclick = function(){
-			// 调用硬件接口
+		// plus无法在web端使用，会出现报错，要解决这个问题，需要把所有的代码放到plusready事件中
+		
+		document.addEventListener('plusready',()=>{
+			// 这里的代码在plus可用时触发
+			console.log('plus ready');
 			
-			// 获取摄像头（主摄像头）
-			const cmr = plus.camera.getCamera();
+			// 摄像头
+			btnCamera.onclick = function(){
+				// 创建webview，并加载html页面
+				const wv = plus.webview.create('views/camera.html','pageCamera');
+				
+				plus.webview.show(wv,'slide-in-left')
+			}
 			
-			// 拍照
-			cmr.captureImage(function(path){
-				console.log('path=',path)
-				
-				// path路径为临时路径，要显示，必须转成绝对路径
-				let realPath = plus.io.convertLocalFileSystemURL(path);
-				console.log('realPath=',realPath)
-				
-				let img = new Image();
-				img.src = realPath;
-				preview.appendChild(img);
-				
-				// 保存到相册
-				plus.gallery.save(path,()=>{
-					console.log('保存到相册')
-					})
-			})
-		}
+			// 语音
+			btnSpeech.onclick = function(){
+				const wv = plus.webview.open('views/speech.html','pageSpeech',null,'zoom-fade-out',1000);
+			}
+		});
 		
 	</script>
 </body>

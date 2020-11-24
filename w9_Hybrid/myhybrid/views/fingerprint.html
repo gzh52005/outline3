@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>指纹操作</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+			.container{padding:15px;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+            <h1>指纹操作</h1>
+            <p class="price">价格：998</p>
+            <button id="btnPayment">支付</button>
+		</div>
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			document.addEventListener('plusready',()=>{
+                const support = plus.fingerprint.isSupport()
+                if(!support){
+                    return plus.nativeUI.alert('你的设备不支持指纹，赶紧更换手机');
+                }
+
+                // 判断当前设别是否已经录入密码
+                if(!plus.fingerprint.isKeyguardSecure()){
+                    return plus.nativeUI.alert('当前设备没有录入密码，请先录入');
+                }
+
+                // 判断当前设别是否已经录入指纹
+                if(!plus.fingerprint.isEnrolledFingerprints()){
+                    return plus.nativeUI.alert('要使用指纹功能，请先录入指纹');
+                }
+                console.log('环境ok')
+
+                // 支付操作
+                let failQty = 0;
+                btnPayment.onclick = function(){
+                    plus.fingerprint.authenticate(()=>{
+                        console.log('指纹识别成功')
+                    },()=>{
+                        console.log('指纹识别失败')
+                        failQty++;
+                        console.log(failQty)
+                        if(failQty>=5){
+                            plus.fingerprint.cancel()
+                            failQty = 0;
+                        }
+                    })
+                }
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>MyHybrid</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet"/>
+		<style>
+			#preview img{margin:5px;padding:5px;border:3px solid #0062CC;width:60px}
+			#preview video{margin:5px;width:100%;}
+		</style>
+	</head>
+	<body>
+		<h1>摄像头</h1>
+		<button id="btnClose">&lt;返回</button>
+		<button id="btnPZ">拍照</button>
+		<button id="btnLX">录像</button>
+		<button type="button" id="btnSM" class="mui-btn mui-btn-royal mui-btn-outlined">扫码</button> 
+		<button type="button" id="btnSB" class="mui-btn mui-btn-royal mui-btn-outlined">识别图片中二维码</button> 
+		<div id="preview">
+			
+		</div>
+		
+		<script>
+			
+			// plusready
+			document.addEventListener('plusready',()=>{
+				// 当plus接口初始化完毕后执行这里的代码
+				const cmr = plus.camera.getCamera(1);
+				const arr_img = [];
+				btnPZ.onclick = ()=>{
+					cmr.captureImage((capturedFile)=>{
+						// 临时路径：不能直接在页面上显示，需要进行转换
+						console.log(capturedFile)
+						arr_img.push(capturedFile);
+						
+						
+						const realPath = plus.io.convertLocalFileSystemURL(capturedFile);
+						console.log(realPath)
+						const img = new Image();
+						img.src = realPath
+						preview.appendChild(img)
+						
+						// 把拍照图片存入相册
+						plus.gallery.save(capturedFile,()=>{
+							plus.nativeUI.toast('保存到相册成功');// 显示几秒后自动关闭
+						},()=>{
+							plus.nativeUI.toast('保存失败')
+						})
+					})
+					
+					
+				}
+				
+				// 图片预览
+				preview.onclick = function(e){
+					if(e.target.tagName.toLocaleLowerCase() === 'img'){
+						let current = 0;
+						for(let i=0;i<preview.children.length;i++){
+							if(preview.children[i] === e.target){
+								current = i;
+								break;
+							}
+						}
+						console.log('current=',current);
+						plus.nativeUI.previewImage(arr_img, {
+							current
+						});
+						
+					}
+					
+				}
+				
+				// 录像
+				btnLX.onclick = ()=>{
+					cmr.startVideoCapture((capturedFile)=>{
+						console.log(capturedFile)
+						const realPath = plus.io.convertLocalFileSystemURL(capturedFile);
+						console.log(realPath)
+						
+						const video = document.createElement('video');
+						video.src = realPath;
+						
+						// 显示控制按钮
+						video.controls = true;
+						
+						// 自动播放
+						video.autoplay = true;
+						
+						preview.appendChild(video);
+					})
+				}
+				
+				// 关闭webview
+				btnClose.onclick = function(){
+					plus.webview.close('pageCamera','slide-out-left')
+				}
+				
+				// 扫码
+				btnSM.onclick = function(){console.log('sm')
+					// plus.barcode.create(id, filters, styles, autoDecodeCharset);
+					const barcode = plus.barcode.create('barcode', [plus.barcode.QR,plus.barcode.EAN13,plus.barcode.EAN8], {
+						top:'0px',
+						left:'0px',
+						width: '100%',
+						height: '100%',
+						position: 'static'
+					});
+							
+					// webview载入: 把扫码界面写入当前y页面
+					plus.webview.currentWebview().append(barcode);
+					
+					// 扫码成功事件
+					barcode.onmarked = function(type, result){
+						// type: 扫码类型，result：扫码结果
+						console.log('扫码成功')
+						console.log(type)
+						console.log(result)
+						
+						const div = document.createElement('div');
+						div.innerHTML = `扫码结果：${result}`;
+						
+						// 根据条码发起ajax请求，查询对象商品信息
+						preview.appendChild(div)
+						
+						// 关闭webview
+						barcode.close();
+					}
+					
+					
+					
+					// 开始扫码
+					barcode.start()
+				}
+				
+				// 识别图片条码/二维码
+				btnSB.onclick = function(){
+					// 拍照
+					// cmr.captureImage((path)=>{
+					// 	// _doc/xxx.png
+					// 	console.log(path);
+					// 	plus.barcode.scan(path,(type, code, file, charset)=>{
+							
+					// 		const div = document.createElement('div');
+					// 		div.innerHTML = `扫码结果：${code}`;
+							
+					// 		preview.appendChild(div)
+					// 	},(e)=>{
+					// 		console.log('失败')
+					// 		console.log(JSON.stringify(e));
+					// 	})
+					// })
+					
+					// 读取相册图片
+					plus.gallery.pick((path)=>{
+						console.log('path=',path)
+						// const localPath = plus.io.convertAbsoluteFileSystem(path);
+						// const localPath = plus.io.convertLocalFileSystemURL(path)
+						// console.log('localPath=',localPath)
+						plus.barcode.scan(path,(type, code, file, charset)=>{
+							// Barcode success code
+							// 蜂鸣声
+							plus.device.beep(5);
+							plus.device.vibrate(1000)
+							plus.device.dial(code, true)
+							
+							const div = document.createElement('div');
+							div.innerHTML = `扫码结果：${code}`;
+	
+							preview.appendChild(div)
+						},(e)=>{
+							console.log('失败',e)
+							console.log(JSON.stringify(e));
+						})
+						
+					})
+				}
+			})
+		</script>
+	</body>
+</html>
