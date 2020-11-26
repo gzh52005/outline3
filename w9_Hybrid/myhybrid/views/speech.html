@@ -32,8 +32,8 @@
 				
 				btnSpeech.onclick = ()=>{
 					plus.speech.startRecognize( {
-						lang:'zh-cantonese',
-						engine:'iFly'
+						lang:'en-us',
+						engine:'iFly',
 					}, (result)=>{
 						console.log('result',result);
 						keyword.value = result;

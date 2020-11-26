@@ -41,8 +41,8 @@
                 btnPayment.onclick = function(){
                     plus.fingerprint.authenticate(()=>{
                         console.log('指纹识别成功')
-                    },()=>{
-                        console.log('指纹识别失败')
+                    },(err)=>{
+                        console.log('指纹识别失败',err)
                         failQty++;
                         console.log(failQty)
                         if(failQty>=5){

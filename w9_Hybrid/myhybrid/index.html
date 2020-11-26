@@ -102,6 +102,16 @@
 			btnSpeech.onclick = function(){
 				const wv = plus.webview.open('views/speech.html','pageSpeech',null,'zoom-fade-out',1000);
 			}
+			
+			// 地图+定位
+			btnPosition.onclick = function(){
+				const wv = plus.webview.open('views/map.html','pageMap');
+			}
+			
+			//  指纹
+			btnFingerprint.onclick = function(){
+				const wv = plus.webview.open('views/fingerprint.html','pageFingerprint');
+			}
 		});
 		
 	</script>

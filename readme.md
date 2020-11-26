@@ -1851,3 +1851,24 @@
     * react-redux
         * Provider
         * connect()
+
+
+## day9-4
+* typescript
+    * 类型校验
+
+```js
+    var num = 100;
+
+    // num = {}
+
+
+    num.toFixed(2);//
+
+    getData()
+```
+
+```ts
+    var num:number = 100;
+    // num = 'abc'; // 报错
+```
